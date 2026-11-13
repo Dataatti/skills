@@ -30,12 +30,14 @@ Baymard figures come from the public pages only, because the full benchmark is p
 - **Look for:** The number of checkout steps and of fields shown by default. Baymard benchmarks: an average of **23.48 form elements / 14.88 form fields** shown by default against an ideal of **12–14 elements / 7–8 fields** (list page, updated 2026-10-28). The checkout-length benchmark gives **11.3 fields and 5.1 steps** for new users in 2024, and "most sites need only 8 form fields". Flag a "confirm email" field, a separate name split where not needed, optional fields shown by default, "Company" or "Address line 2" always visible, and billing address not defaulting to "same as shipping".
 - **Test:** Count the visible `input`/`select`/`textarea` elements on each checkout or signup step. Compare to the benchmarks. Mark every field that is not required to fulfil the order.
 - **Severity:** High if more than about 15 fields or 5+ steps for a guest. Medium if 9–15 fields.
+- **Pre-purchase quizzes** (common in subscription funnels): count every screen before the first price as a step. Judge whether each question changes what is offered; questions that don't are friction under CV-03. Report a price hidden until the end of the quiz under CV-05.
 - **Source:** https://baymard.com/lists/cart-abandonment-rate · https://baymard.com/blog/checkout-flow-average-form-fields
 
 ### CV-04 Forced account creation / guest checkout
 - **Look for:** Can a user buy without an account? Is "Guest checkout" the *most prominent* option? Baymard: 62% of sites don't make it most prominent (2026 guide). 18% of shoppers abandoned because the site wanted an account created. Account creation is best offered *after* purchase, on the confirmation step (42% of sites don't do this).
 - **Test:** Walk the flow from the cart. Check whether a login or register wall appears before shipping details, and whether the guest option is a link or secondary button below login.
 - **Severity:** Critical if there is no guest path (e-commerce). High if the guest option is buried.
+- **Subscriptions and SaaS:** an account is expected, because the service needs one. Don't fail CV-04 for requiring it; judge where it's asked (before or after the plan and price are clear) and how heavy it is (fields, password rules, email verification before checkout).
 - **Source:** https://baymard.com/blog/checkout-flow-ux-optimization · https://baymard.com/research-articles/make-guest-checkout-prominent · https://baymard.com/research-articles/delayed-account-creation
 
 ### CV-05 Cost transparency (total cost up front)
@@ -64,7 +66,7 @@ Baymard figures come from the public pages only, because the full benchmark is p
 
 ### CV-09 Page speed / Core Web Vitals
 - **Look for:** "Good" thresholds at the 75th percentile of real users: **LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1**. Business link: Deloitte/Google 2020 found +0.1 s speed across the journey went with +8.4% retail and +10.1% travel conversions. Google/SOASTA 2017 found bounce probability +32% going from 1 s to 3 s load.
-- **Test:** Run Lighthouse or PageSpeed Insights (lab) and check the CrUX field data if it is available, for home, category, product, cart and checkout pages on mobile. Note third-party scripts on checkout.
+- **Test:** Run `node <skill-dir>/scripts/vitals.cjs <url> ...` for home, product, cart and checkout. It uses one fixed profile (375×667, Slow 4G, 4× CPU), so all reviewers' numbers are comparable. Report its numbers as "lab, Slow 4G". If PageSpeed Insights or CrUX field data is reachable, prefer field data and say which you used. Note third-party hosts on checkout.
 - **Severity:** High if LCP > 4 s, INP > 500 ms or CLS > 0.25 (the "poor" thresholds) on key pages. Medium if in "needs improvement".
 - **Source:** https://web.dev/articles/vitals · https://web.dev/case-studies/milliseconds-make-millions
 
@@ -83,6 +85,7 @@ Baymard figures come from the public pages only, because the full benchmark is p
 ### CV-12 Payment options and decline handling
 - **Look for:** Payment methods suited to the market (cards plus local wallets or methods), express checkout (Apple Pay, Google Pay, PayPal) offered early. A clear message and retry path for declined cards. Abandonment: **9%** not enough payment methods, **10%** card declined.
 - **Test:** List the methods shown and compare them to the target market. Check whether express pay appears on the cart or product page. Read the decline copy if testable (use test cards only in test mode).
+- **Headless caveat:** Apple Pay and Google Pay buttons often don't render in headless Chromium (no wallet, no supported device). Before flagging them as missing, check the page source or the payment integration (e.g. a Payment Request / Stripe Express Checkout element). If you can't tell, record it as "not verifiable headless", not as a finding.
 - **Severity:** Medium. High if a dominant local method is missing.
 - **Source:** https://baymard.com/lists/cart-abandonment-rate
 
@@ -115,3 +118,9 @@ Baymard figures come from the public pages only, because the full benchmark is p
 - **Test:** Compare the product page content against the questions a buyer must answer before buying (size or fit, what's included, cost to door, when it arrives, can I return it).
 - **Severity:** Medium to High depending on the category.
 - **Source:** https://baymard.com/learn/ux-statistics
+
+### CV-18 Subscription and recurring-price disclosure
+- **Look for:** At the point of payment, the recurring price, the billing frequency, when the first charge happens (including when a trial ends), and how to cancel, shown next to the pay button and not only in the terms. The order button should say that the order involves payment.
+- **Test:** On the last step before payment details, record what the page states about price per period, renewal, trial end and cancellation, and the exact button text. Compare it to the plan page.
+- **Severity:** Critical if the recurring charge or trial-to-paid conversion is not stated before billing details are collected (also a legal risk). High if it is only in linked terms or small print. See forced continuity in ethics.md.
+- **Source:** US ROSCA, 15 U.S.C. §8403: material terms "clearly and conspicuously" disclosed before billing information is obtained, "express informed consent", and "simple mechanisms" to stop recurring charges (https://www.law.cornell.edu/uscode/text/15/8403). EU Consumer Rights Directive 2011/83/EU Art. 6(1)(e): for subscriptions "the total price shall include the total costs per billing period"; Art. 8(2): that information must be shown directly before the order, and the order button must indicate an obligation to pay (https://www.legislation.gov.uk/eudr/2011/83/article/6 · https://www.legislation.gov.uk/eudr/2011/83/article/8). Checked 2026-11-13.
