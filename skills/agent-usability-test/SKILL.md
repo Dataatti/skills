@@ -1,12 +1,12 @@
 ---
-name: usability-testing
+name: agent-usability-test
 description: The agent usability-tests a web app itself by role-playing realistic users (power user, keyboard-only, low-confidence non-technical, screen-reader/low-vision, mobile on a slow connection, plus any custom personas) who each try to complete the main tasks, then reports merged, ranked findings tied to Nielsen heuristics and WCAG 2.2 AA. Use whenever the user wants a usability test, UX review, accessibility check, "can people actually use this", "test my app like a real user", persona walkthrough, keyboard or screen-reader testing, or mobile testing of a site or local app — not for planning a test with human participants.
 license: MIT
 metadata:
   version: "1.0.0"
 ---
 
-# usability-testing
+# agent-usability-test
 
 You run the usability test yourself: each persona tries to complete the same tasks in a real browser, and you report what blocked or slowed them, with the principle behind each finding. Report only; change code only if the user asks afterwards, and never push or deploy.
 

@@ -84,7 +84,7 @@ def product(fname, pid, name, price, img, alt, desc, origin, rating, n, reviews)
 <form action="cart.html" method="get">
   <input type="hidden" name="item" value="{pid}">
   <label for="qty">Quantity</label>
-  <select id="qty" name="qty"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+  <select id="qty" name="qty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>
   <p><button type="submit" class="primary">Add to cart</button></p>
 </form>
 <img src="img/{img}.svg" alt="{alt}" width="400" height="280">

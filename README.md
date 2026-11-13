@@ -16,8 +16,8 @@ Install one skill only: `npx skills add dataatti/skills --skill cookie-consent-a
 |---|---|---|
 | [cookie-consent-audit](skills/cookie-consent-audit/SKILL.md) | Loads the site with a fresh browser profile. It lists every cookie, storage item and third-party request before any interaction, then tests the banner: reject vs accept, pre-ticked boxes, granularity, withdrawal, proof of consent, and GPC / "Do Not Sell or Share". Covers EU (ePrivacy, GDPR, EDPB, CNIL, ICO, Traficom) and US (CCPA/CPRA plus state laws). | "Is our cookie banner compliant for the EU and US?" |
 | [gdpr-data-retention](skills/gdpr-data-retention/SKILL.md) | Inventories personal data across the schema, code, logs, backups and processors. Checks each item for purpose, lawful basis, retention period, automatic deletion and erasure path. Respects legal minimums such as bookkeeping. | "How long may we keep this data, and does account deletion really delete?" |
-| [usability-testing](skills/usability-testing/SKILL.md) | The agent tests the app itself as five users: power user, keyboard-only, low-confidence, screen-reader/low-vision, and mobile on a slow connection. One subagent per persona, run in parallel. Findings are merged and ranked by severity and by how many personas hit them, citing WCAG 2.2 and Nielsen. Add your own personas from `references/personas/TEMPLATE.md`. | "Usability-test our checkout like real customers would" |
-| [conversion-pro](skills/conversion-pro/SKILL.md) | Finds the main money flows, then runs five fully independent reviewers over them. Ranks leaks by how many reviewers found each one: 1 reviewer = low confidence. Cites Baymard, Fogg, Cialdini and Core Web Vitals, and never suggests dark patterns. | "We get traffic but nobody buys – where do we lose them?" |
+| [agent-usability-test](skills/agent-usability-test/SKILL.md) | The agent tests the app itself as five users: power user, keyboard-only, low-confidence, screen-reader/low-vision, and mobile on a slow connection. One subagent per persona, run in parallel. Findings are merged and ranked by severity and by how many personas hit them, citing WCAG 2.2 and Nielsen. Add your own personas from `references/personas/TEMPLATE.md`. | "Usability-test our checkout like real customers would" |
+| [conversion-audit](skills/conversion-audit/SKILL.md) | Finds the main money flows, then runs five fully independent reviewers over them. Ranks leaks by how many reviewers found each one: 1 reviewer = low confidence. Cites Baymard, Fogg, Cialdini and Core Web Vitals, and never suggests dark patterns. | "We get traffic but nobody buys – where do we lose them?" |
 | [token-sweep](skills/token-sweep/SKILL.md) | For spare tokens before your limit resets. Runs the relevant audits above in parallel and scans for bugs, vulnerable or outdated dependencies, missing tests and docs gaps. Fixes the small safe ones on a new local branch and never pushes. | "I've got tokens left tonight – sweep this repo" |
 
 Shared rules:
@@ -66,11 +66,11 @@ The tables below give one run per case. Both arms use the same model (Claude Son
 <!-- BASELINES:START -->
 | Skill | With skill | Without skill | Time (s) | Tokens | Cost (USD) |
 |---|---|---|---|---|---|
-| conversion-pro | 85% | 69% | 450 | 1,517,431 | 2.0 |
+| agent-usability-test | 100% | 42% | 1159 | 5,850,751 | 3.57 |
+| conversion-audit | 85% | 69% | 450 | 1,517,431 | 2.0 |
 | cookie-consent-audit | 93% | 73% | 231 | 61,591 | 0.37 |
 | gdpr-data-retention | 87% | 73% | 145 | 72,698 | 0.48 |
 | token-sweep | 100% | 67% | 70 | 32,363 | 0.22 |
-| usability-testing | 100% | 42% | 1159 | 5,850,751 | 3.57 |
 <!-- BASELINES:END -->
 
 ### Run them yourself
@@ -90,9 +90,9 @@ python3 scripts/summarize-evals.py cookie-consent-audit --gate
 `.github/workflows/evals.yml` runs on every pull request:
 1. `validate` checks frontmatter, referenced files and case structure. It needs no API key.
 2. `select` picks only the skills whose files changed. A change to shared fixtures or scripts selects all skills.
-3. `eval` serves the fixtures, runs each selected skill headless with `claude plugin eval`, and grades the assertions. The PR fails if the pass rate drops more than 10 points below `baseline.json`, or if a clean-control case newly fails a grader.
+3. `eval` serves the fixtures, runs each selected skill headless with `claude plugin eval`, and grades the assertions. The PR fails if the pass rate drops more than 10 points below `baseline.json`, or if a clean-control case newly fails more than one grader (one is allowed as LLM-judge noise).
 
-**Setup:** add an `ANTHROPIC_API_KEY` repository secret (Settings → Secrets and variables → Actions). Forked PRs don't receive secrets; a maintainer can re-run the evals with *Run workflow*.
+**Setup:** CI runs on a Claude subscription. Run `claude setup-token` locally (needs a Pro or Max plan) and save the token as the repository secret `CLAUDE_CODE_OAUTH_TOKEN` (Settings → Secrets and variables → Actions). An `ANTHROPIC_API_KEY` secret works instead if you'd rather pay per token. Eval runs count against your plan's usage limits (a full run of all five skills is roughly what $7 of API usage would buy), so CI evaluates skills one at a time and only those that changed. Forked PRs don't receive secrets; a maintainer can re-run the evals with *Run workflow*.
 
 ## Repo layout
 

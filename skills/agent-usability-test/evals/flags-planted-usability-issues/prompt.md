@@ -1,5 +1,5 @@
 ---
-tags: [skill-creator, usability-testing]
+tags: [skill-creator, agent-usability-test]
 max_turns: 80
 timeout_seconds: 1800
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash, Task]

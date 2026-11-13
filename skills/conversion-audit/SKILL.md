@@ -1,12 +1,12 @@
 ---
-name: conversion-pro
+name: conversion-audit
 description: Finds conversion leaks in a site's or app's main user flows (browse → product → cart → checkout, signup, lead or demo forms, pricing → trial) by running five independent reviewer agents and ranking issues by how many found them. Use whenever the user asks why visitors don't buy or sign up, wants a CRO / conversion audit, checkout or funnel review, cart-abandonment or drop-off diagnosis, landing-page or pricing-page critique, or "how do I get more sales/signups from this site", even if they don't say "conversion".
 license: MIT
 metadata:
   version: "1.0.0"
 ---
 
-# conversion-pro
+# conversion-audit
 
 Find where the main flows lose people, and back every finding with established research. Report only; change code only if the user asks afterwards, and never push or deploy.
 

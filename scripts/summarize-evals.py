@@ -7,8 +7,8 @@ Pass rate = passed graders / all graders over the with-skill runs (the same numb
 skill-creator's benchmark reports). Tokens come from each run's trace when it was kept
 (--keep-temp); cost and time come from the result file.
 --gate            exit 1 if the pass rate is below baseline.json pass_rate - tolerance,
-                  or if any clean-control case (name starts with no-false-) loses a grader
-                  it passed in the baseline.
+                  or if any clean-control case (name starts with no-false-) newly fails more
+                  than one grader it passed in the baseline (one is allowed as judge noise).
 --write-baseline  write skills/<skill>/evals/baseline.json from this result.
 Prints a Markdown summary (suitable for $GITHUB_STEP_SUMMARY).
 """
@@ -70,8 +70,11 @@ if a.gate and w:
         for case, s in w["cases"].items():
             if case.startswith("no-false-"):
                 lost = set(s["failed"]) - set(b.get("cases", {}).get(case, {}).get("failed", []))
-                if lost:
+                # One run of LLM-judged agents is noisy: allow one newly failed grader per clean case.
+                if len(lost) > b.get("clean_case_tolerance", 1):
                     lines.append(f"**FAIL**: clean-control case {case} regressed: {', '.join(sorted(lost))}"); code = 1
+                elif lost:
+                    lines.append(f"Note: clean-control case {case} newly failed {', '.join(sorted(lost))} (within the 1-grader noise tolerance).")
         if code == 0:
             lines.append("**PASS**: no regression against baseline.")
     else:

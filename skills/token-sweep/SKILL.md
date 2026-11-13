@@ -1,6 +1,6 @@
 ---
 name: token-sweep
-description: Uses spare tokens before a usage limit resets (e.g. Friday evening) to sweep the current project - runs the other relevant audit skills in parallel (cookie-consent-audit, gdpr-data-retention, usability-testing, conversion-pro) and scans for worthwhile small jobs (bugs, outdated or vulnerable dependencies, missing tests, docs gaps), working only on a new local branch and never pushing or deploying. Use whenever the user says they have tokens/credits/quota left, wants a "sweep", "what could you do while I'm away", "find useful work in this repo", "end-of-week cleanup", or asks for a ranked to-do list of improvements for the project.
+description: Uses spare tokens before a usage limit resets (e.g. Friday evening) to sweep the current project - runs the other relevant audit skills in parallel (cookie-consent-audit, gdpr-data-retention, agent-usability-test, conversion-audit) and scans for worthwhile small jobs (bugs, outdated or vulnerable dependencies, missing tests, docs gaps), working only on a new local branch and never pushing or deploying. Use whenever the user says they have tokens/credits/quota left, wants a "sweep", "what could you do while I'm away", "find useful work in this repo", "end-of-week cleanup", or asks for a ranked to-do list of improvements for the project.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -29,14 +29,14 @@ Read README, manifest files (`package.json`, `pyproject.toml`, `go.mod`...), tes
 |---|---|
 | cookie-consent-audit | a public web front end, analytics/ad tags, a cookie banner |
 | gdpr-data-retention | a database, user accounts, logs or third-party processors holding personal data |
-| usability-testing | a UI people use (web app or site) that can be served locally |
-| conversion-pro | a checkout, signup, lead form or pricing page |
+| agent-usability-test | a UI people use (web app or site) that can be served locally |
+| conversion-audit | a checkout, signup, lead form or pricing page |
 
 Skip the ones that don't apply and say why in one line. If a skill is not installed, mention it as a suggestion instead of running it.
 
 ## 2. Run in parallel
 
-Spawn subagents in one turn when you can: one per applicable audit skill (each tells it to use that skill on this project, report only) plus one **job scanner** using `references/jobs.md`. Without subagents, run them one after another, the job scanner first. Audit skills that normally fan out (usability-testing's personas, conversion-pro's five reviewers) use their own documented fallback when running inside a subagent that can't spawn more.
+Spawn subagents in one turn when you can: one per applicable audit skill (each tells it to use that skill on this project, report only) plus one **job scanner** using `references/jobs.md`. Without subagents, run them one after another, the job scanner first. Audit skills that normally fan out (agent-usability-test's personas, conversion-audit's five reviewers) use their own documented fallback when running inside a subagent that can't spawn more.
 
 The job scanner looks for: likely bugs (wrong maths, unchecked errors, off-by-one, TODO/FIXME that describe real defects), outdated or vulnerable dependencies (`npm outdated`/`npm audit`, `pip list --outdated`, etc. – or compare versions to known CVEs when offline), code without tests, failing or placeholder test scripts, docs gaps (no install/run steps), and lint/type errors. Every item gets evidence (file:line, command output) and a principle or source from `references/jobs.md`.
 
@@ -53,7 +53,7 @@ Rank by impact ÷ effort (impact: High/Med/Low; effort: S ≤ 30 min, M ≤ half
 ```
 # Token sweep – <repo> – <date>
 Checked 6 areas · Done 3 · Suggested 9 · Branch: token-sweep/<date> (local, not pushed)
-Skills run: cookie-consent-audit, gdpr-data-retention · Skipped: conversion-pro (no checkout)
+Skills run: cookie-consent-audit, gdpr-data-retention · Skipped: conversion-audit (no checkout)
 
 | # | Item | Impact | Effort | Status | Evidence / why |
 |---|---|---|---|---|---|
