@@ -1,6 +1,6 @@
 # token-sweep
 
-Uses spare tokens before a usage limit resets (e.g. Friday evening) to sweep the current project - runs the other relevant audit skills in parallel (cookie-consent-audit, gdpr-data-retention, usability-testing, conversion-pro) and scans for worthwhile small jobs (bugs, outdated or vulnerable dependencies, missing tests, docs gaps), working only on a new local branch and never pushing or deploying. Use whenever the user says they have tokens/credits/quota left, wants a "sweep", "what could you do while I'm away", "find useful work in this repo", "end-of-week cleanup", or asks for a ranked to-do list of improvements for the project.
+Uses spare tokens before a usage limit resets (e.g. Friday evening) to sweep the current project - runs the other relevant audit skills in parallel (cookie-consent-audit, gdpr-data-retention, agent-usability-test, conversion-audit) and scans for worthwhile small jobs (bugs, outdated or vulnerable dependencies, missing tests, docs gaps), working only on a new local branch and never pushing or deploying. Use whenever the user says they have tokens/credits/quota left, wants a "sweep", "what could you do while I'm away", "find useful work in this repo", "end-of-week cleanup", or asks for a ranked to-do list of improvements for the project.
 
 Install: `npx skills add dataatti/skills --skill token-sweep` · Instructions: [SKILL.md](SKILL.md) · Sources: [references/](references/)
 

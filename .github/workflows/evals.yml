@@ -54,18 +54,27 @@ jobs:
     timeout-minutes: 90
     strategy:
       fail-fast: false
+      # One skill at a time: subscription runs share your plan's usage window.
+      max-parallel: 1
       matrix:
         skill: ${{ fromJSON(needs.select.outputs.skills) }}
     env:
+      # Preferred: a Claude subscription token from `claude setup-token` (runs on your plan's usage
+      # limits). An API key still works as a fallback if you set ANTHROPIC_API_KEY instead.
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       EVAL_MODEL: claude-sonnet-5-5
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check API key
+      - name: Check credentials
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::ANTHROPIC_API_KEY secret is not set (forked PRs don't receive secrets)."; exit 1
+          if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            echo "Using Claude subscription (CLAUDE_CODE_OAUTH_TOKEN)."
+          elif [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "Using API key (ANTHROPIC_API_KEY)."
+          else
+            echo "::error::Set the CLAUDE_CODE_OAUTH_TOKEN (or ANTHROPIC_API_KEY) secret. Forked PRs don't receive secrets."; exit 1
           fi
 
       - uses: actions/setup-node@v4
@@ -83,9 +92,11 @@ jobs:
 
       - name: Run evals
         run: |
+          # Don't let an API key take precedence over the subscription token.
+          if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ]; then unset ANTHROPIC_API_KEY; fi
           scripts/run-evals.sh "${{ matrix.skill }}" \
             --runs 1 --ablation none --model "$EVAL_MODEL" \
-            --threshold 0 -j 2 --keep-temp --max-cost-usd 15
+            --threshold 0 -j 1 --keep-temp --max-cost-usd 15
 
       - name: Gate against baseline
         run: python3 scripts/summarize-evals.py "${{ matrix.skill }}" --gate | tee -a "$GITHUB_STEP_SUMMARY"

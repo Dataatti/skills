@@ -10,10 +10,9 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
 - **Shared output contract**: the first line is `Passed X of Y`, then a table of failures only, one line per cell, each with fix and principle. This meets rule 2. Exact counts are required because the judge failed "about 40 of 46" in round 1.
 - **One-line out-of-scope rule** in the four audit skills: round-1 reports drifted into extra paragraphs about other domains, which breaks "no essays".
 
-## Names (working names kept; proposals for you to decide)
-- Kept all five working names so your install commands and brief match.
-- Proposal: rename `conversion-pro` → `conversion-audit` to match `cookie-consent-audit` (a verb-noun pattern that says what it does). Not done, because renaming changes the install name.
-- Proposal: rename `usability-testing` → `agent-usability-test`, which makes it clear the agent runs the test, not a human study. That distinction is the skill's differentiator. Not done, for the same reason.
+## Names
+- Renamed with the owner's approval (2026-11-13): `conversion-pro` → `conversion-audit`, to match `cookie-consent-audit`; `usability-testing` → `agent-usability-test`, to make clear the agent runs the test itself, not a human study. Earlier entries below use the old names.
+- `cookie-consent-audit`, `gdpr-data-retention` and `token-sweep` keep their working names.
 
 ## Research
 - **Five parallel research subagents**: one per domain, plus one on format/CI. Results are in each skill's `references/`, every claim with a link and "Sources checked as of 2026-11-12".
@@ -87,3 +86,8 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
   - conversion-pro: Add to cart below the fold and an overflowing image on mobile, both since fixed in the fixture.
 - **First CI run**: after it, re-record baselines with `python3 scripts/summarize-evals.py <skill> --write-baseline` and `python3 scripts/render-baselines.py`.
 - **Cost**: usability-testing is the most expensive skill (≈$3.60 and ~19 min per eval run), because it runs five persona subagents with real browsers. conversion-pro is next (≈$2).
+
+## CI authentication (2026-11-13, owner's request)
+- **Subscription token, API key as fallback.** CI authenticates with `CLAUDE_CODE_OAUTH_TOKEN`, made by `claude setup-token`, so evals run on the owner's Claude subscription rather than per-token billing. The same mechanism is supported by `anthropics/claude-code-action` as `claude_code_oauth_token`. `ANTHROPIC_API_KEY` stays as a fallback. When the token is present, the key is blanked so it can't take precedence.
+- **Runs are serialised** (`max-parallel: 1`, `-j 1`): subscription runs share the plan's 5-hour usage window, and this session hit that limit twice while recording baselines. A failed run caused by the limit shows up as an API error in the eval log, not as a skill regression.
+- **The `--max-cost-usd` cap stays.** It is a client-side estimate that still bounds how much of the usage window one run can take.
