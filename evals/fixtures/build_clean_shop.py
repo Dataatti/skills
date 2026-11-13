@@ -79,22 +79,22 @@ def product(fname, pid, name, price, img, alt, desc, origin, rating, n, reviews)
     page(fname, name, f'''<nav aria-label="Breadcrumb"><a href="index.html">Shop</a> › {name}</nav>
 <h1>{name}</h1>
 <p>{stars(rating,n)} · <a href="#reviews">Read reviews</a></p>
-<img src="img/{img}.svg" alt="{alt}" width="400" height="280">
 <p class="price">€{price} / 100 g resealable pouch</p>
 <p>{desc}</p>
-<ul>
-  <li>Origin: {origin}. Certified organic (EU organic logo).</li>
-  <li>About 50 cups per pouch. Store cool and dry.</li>
-  <li>Shipping €4.90, free over €40. Order by 14:00 for same-day dispatch – estimated delivery <strong data-eta>in 1–3 working days</strong>.</li>
-  <li>Free returns within 30 days (<a href="returns.html">returns policy</a>).</li>
-</ul>
 <form action="cart.html" method="get">
   <input type="hidden" name="item" value="{pid}">
   <label for="qty">Quantity</label>
   <select id="qty" name="qty"><option>1</option><option>2</option><option>3</option><option>4</option></select>
   <p><button type="submit" class="primary">Add to cart</button></p>
 </form>
-<section id="reviews"><h2>Reviews</h2><p>Showing the 2 most recent reviews, including critical ones. <a href="reviews.html">Read all reviews</a></p><ul class="reviews">{revs}</ul></section>
+<img src="img/{img}.svg" alt="{alt}" width="400" height="280">
+<ul>
+  <li>Origin: {origin}. Certified organic (EU organic logo).</li>
+  <li>About 50 cups per pouch. Store cool and dry.</li>
+  <li>Shipping €4.90, free over €40. Order by 14:00 for same-day dispatch – estimated delivery <strong data-eta>in 1–3 working days</strong>.</li>
+  <li>Free returns within 30 days (<a href="returns.html">returns policy</a>).</li>
+</ul>
+<section id="reviews"><h2>Reviews</h2><p>Showing the 2 most recent reviews, including critical ones. <a href="reviews.html">Read all reviews and the rating breakdown</a></p><ul class="reviews">{revs}</ul></section>
 ''')
 product("product.html", "sencha", "Sencha Morning", "12.50", "sencha", "Green sencha leaves in a white bowl",
         "Fresh, grassy Japanese green tea. Brew 1 tsp at 75 °C for 2 minutes.", "Shizuoka, Japan", 4.6, 128,
@@ -118,7 +118,7 @@ page("cart.html", "Cart", '''<h1 id="cart-heading" tabindex="-1">Your cart</h1>
   </tfoot>
 </table></div>
 <p><button type="submit" class="primary">Go to checkout</button></p>
-<p>No account needed. You can check out as a guest.</p>
+<p>Estimated delivery: <strong data-eta>1–3 working days</strong>. No account needed – you can check out as a guest.</p>
 </form>
 ''')
 page("checkout.html", "Checkout", '''<h1>Checkout</h1>
@@ -162,7 +162,7 @@ page("checkout.html", "Checkout", '''<h1>Checkout</h1>
     <legend>🔒 Card details – secure payment by Stripe</legend>
     <label for="cc-number">Card number</label>
     <input id="cc-number" name="cc-number" autocomplete="cc-number" inputmode="numeric" aria-describedby="cc-number-err">
-    <span id="cc-number-err" class="error-msg" hidden>Enter the 16-digit card number</span>
+    <span id="cc-number-err" class="error-msg" hidden>Check your card number – it looks mistyped</span>
     <label for="cc-exp">Expiry date <span class="hint">MM/YY</span></label>
     <input id="cc-exp" name="cc-exp" autocomplete="cc-exp" inputmode="numeric" aria-describedby="cc-exp-err">
     <span id="cc-exp-err" class="error-msg" hidden>Enter the expiry date as MM/YY</span>
@@ -180,7 +180,8 @@ page("checkout.html", "Checkout", '''<h1>Checkout</h1>
 page("confirm.html", "Order confirmed", '''<h1>Thank you – your order is confirmed</h1>
 <p>Order number KC-10482. A receipt is on its way to your email.</p>
 <ul id="summary-items"></ul>
-<p>Total paid: <strong id="summary-total"></strong>. Your tea ships today and arrives in 1–3 working days.</p>
+<p>Total paid: <strong id="summary-total"></strong>. Your tea ships today. Estimated delivery: <strong data-eta>1–3 working days</strong>.</p>
+<p>Want to track orders next time? <a href="account.html">Create an account with one click</a> – optional.</p>
 <p><a href="index.html">Continue shopping</a></p>
 ''')
 page("help.html", "Help and contact", '''<h1>Help and contact</h1>

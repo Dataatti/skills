@@ -9,7 +9,7 @@ CREATE TABLE customers (
   password_hash text NOT NULL,
   stripe_customer_id text,                       -- Stripe reference; erased via Stripe redaction on deletion
   last_login_at timestamptz NOT NULL,
-  inactivity_notice_sent_at timestamptz,         -- warned 30 days before the 24-month inactivity purge
+  inactivity_notice_sent_at timestamptz,         -- warned 30 days before the 24-month inactivity purge; reset to NULL on login
   created_at    timestamptz NOT NULL DEFAULT now()
 );
 
@@ -51,8 +51,10 @@ CREATE TABLE support_tickets (
   closed_at   timestamptz                         -- retention: 12 months after closed_at (or 12 months of inactivity if never closed)
 );
 
-CREATE TABLE processor_erasure_retry (           -- transient queue; rows deleted once the processor confirms
-  email text, stripe_customer_id text, attempts integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
+-- Pending erasures at processors (Stripe redaction, Brevo delete). Rows are deleted as soon as the
+-- processor confirms; jobs/erasure-queue.js retries every 15 minutes and alerts after 3 failures.
+CREATE TABLE erasure_queue (
+  email text, stripe_customer_id text, attempts integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE consent_log (

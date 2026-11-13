@@ -10,4 +10,9 @@ async function erase({ email, stripeCustomerId }) {
   if (email) await brevo.deleteContact(email);
 }
 
-module.exports = { erase, brevo };
+async function drainQueue(db) {
+  const log = require("./logger"), alert = require("./lib/alert");
+  return require("./jobs/erasure-queue")(db, log, alert);
+}
+
+module.exports = { erase, brevo, drainQueue };

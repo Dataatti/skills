@@ -28,8 +28,8 @@ async function runRetention(db, log, { processors, mailer, alert }) {
         if (rule.processors) await processors.erase({ email: row.email, stripeCustomerId: row.stripe_customer_id });
         if (rule.brevo) await processors.brevo.deleteContact(row.email);
       } catch (err) {
-        // Failed processor erasures are queued and retried; an alert fires after 3 failures.
-        await db.query("INSERT INTO processor_erasure_retry (email, stripe_customer_id, attempts) VALUES ($1, $2, 1)", [row.email, row.stripe_customer_id]);
+        // Failed processor erasures go to erasure_queue (jobs/erasure-queue.js retries them).
+        await db.query("INSERT INTO erasure_queue (email, stripe_customer_id) VALUES ($1, $2)", [row.email, row.stripe_customer_id]);
         log.error({ table: rule.table, err }, "processor erasure queued for retry");
       }
     }

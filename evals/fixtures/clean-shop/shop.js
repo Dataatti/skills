@@ -82,6 +82,14 @@
     document.querySelectorAll('input[name="pay"]').forEach(function (r) {
       r.addEventListener("change", function () { card.hidden = !document.getElementById("pay-card").checked; });
     });
+    ["email", "postcode"].forEach(function (id) {
+      document.getElementById(id).addEventListener("blur", function () {
+        var el = this, err = document.getElementById(id + "-err");
+        if (!el.value.trim()) return;
+        var ok = id === "email" ? /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()) : /^\d{5}$/.test(el.value.replace(/^FI-?/i, "").replace(/\s/g, ""));
+        err.hidden = ok; el.setAttribute("aria-invalid", ok ? "false" : "true");
+      });
+    });
     document.getElementById("checkout").addEventListener("submit", function (e) {
       e.preventDefault();
       var checks = {
