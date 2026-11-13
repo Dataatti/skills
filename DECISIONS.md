@@ -98,3 +98,28 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
 - **Clean fixture, other fixes.** The cart table stacks on narrow screens, and the product page offers quantities 1–10 to match the cart.
 - **First CI pass rates** (one run each): cookie 100%, gdpr 100%, agent-usability-test 92%, token-sweep 100%, conversion 85%.
 - **Clean-case noise tolerance.** With `pipefail` working, `conversion-audit`'s clean case failed CI on one grader that had passed locally on the same fixture. That is a single run of five LLM reviewers plus an LLM judge, so some variance is expected. A clean-control case now fails CI only when it newly fails **two or more** graders against baseline. The overall pass-rate floor (baseline − 10 points) is unchanged. The conversion "no false trust or form claims" grader now only counts claims that something is *absent*; suggestions to improve existing reviews don't count.
+
+## conversion-audit v1.1 – first tester's feedback (2026-11-13)
+Taken (each fixes a real failure mode, a false finding, or unreproducible numbers):
+- **Safe submission section**:
+  - No real orders, payments or accounts on production.
+  - Test credentials are used only if the user gives them, the site is in test mode, or it's a local copy.
+  - Otherwise reviewers stop at the final pay button.
+  - Nothing is submitted on production pages reached from staging.
+  - If the agent can't ask the user, it assumes nothing may be submitted, so unattended runs never block.
+- **Environment notes**: one block passed word for word to all five reviewers. Identical input doesn't break independence; shared *findings* would.
+- **One work folder per reviewer**, because shared scratch space leaks findings between reviewers.
+- **Locale and timezone set to the site's market**, which removes false "untranslated" findings.
+- **Hard-blocker rule**: report the blocker, retry at most twice, then reach later steps another way or mark them unverified.
+- **CV-12 headless caveat**: wallets often don't render in headless Chromium, so check the source or else record "not verifiable headless".
+- **New CV-18 subscription disclosure**: recurring price, frequency, trial end and cancellation shown before billing details are collected. Sources: ROSCA §8403 and CRD 2011/83 Art. 6(1)(e) and 8(2), verified on 2026-11-13.
+- **CV-04 note**: an account is expected for subscriptions; judge where it is asked and how heavy it is.
+- **`scripts/vitals.cjs`**: one fixed profile (375×667, Slow 4G, 4× CPU), so all reviewers' CV-09 numbers are comparable. It separates the fixtures: 1.6 s vs 3.8 s LCP.
+- **Majority score**: a property × step pair fails only when 3 of 5 reviewers fail it. Single-reviewer findings stay in the report as low confidence.
+- **Severity = median** of reviewer ratings, with ties going to the higher rating, and no second raise for checkout.
+- **Fixed one-line reviewer output** (`step | CV-xx | severity | evidence | screenshot`). An optional screenshot path is appended to the Issue cell.
+- **Cost stated** in SKILL.md and the README.
+
+Taken only partly:
+- **Pre-purchase quizzes**: guidance added under CV-03 instead of a new ID. Quiz length is friction (CV-03), and a price hidden until the end is a CV-05 finding; a separate ID would split the same issue two ways.
+- **Screenshots**: no new report column. A bracketed path in the Issue cell keeps the one-line table.
