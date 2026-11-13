@@ -98,3 +98,25 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
 - **Clean fixture, other fixes.** The cart table stacks on narrow screens, and the product page offers quantities 1–10 to match the cart.
 - **First CI pass rates** (one run each): cookie 100%, gdpr 100%, agent-usability-test 92%, token-sweep 100%, conversion 85%.
 - **Clean-case noise tolerance.** With `pipefail` working, `conversion-audit`'s clean case failed CI on one grader that had passed locally on the same fixture. That is a single run of five LLM reviewers plus an LLM judge, so some variance is expected. A clean-control case now fails CI only when it newly fails **two or more** graders against baseline. The overall pass-rate floor (baseline − 10 points) is unchanged. The conversion "no false trust or form claims" grader now only counts claims that something is *absent*; suggestions to improve existing reviews don't count.
+
+## agent-usability-test v1.1 – first tester's feedback (2026-11-13)
+Taken:
+- **Safety section**:
+  - No data entry or submits on production.
+  - Test accounts and cards are used only on test or staging environments, or on a local copy.
+  - Links from staging into production are not followed; they go on the Environment line.
+  - Each persona lists the records it created.
+  - If the agent can't ask the user, it assumes nothing may be submitted, so unattended runs don't block.
+- **Smoke pass before the personas**: the main agent runs every task once, unthrottled. It reports no usability findings from it. Blockers and their workarounds go into the environment notes. In the test, five personas each rediscovered the same 500 error.
+- **After a block**: the persona records the failure and the task counts as failed. It then finishes the later steps as a plain tester and marks those findings "after block", so later steps still get tested without hiding the failure.
+- **Dependent tasks**: "blocked by task N" counts as failed, because that user didn't get there. "Not attempted" is only for named environment blockers, which are left out of the score. A product failure lowers the score; a broken staging server doesn't.
+- **Check step**: every finding needs evidence (a DOM excerpt or a screenshot path). The main agent re-checks all severity 3–4 findings and drops what it can't reproduce. This was the tester's real false finding: a taste profile read as a box size.
+- **Environment line**, kept separate from usability findings, with "check a known-good environment before blaming the product".
+- **Locale in the environment notes and the brief**: jargon and mixed-language strings are judged in the site's own language.
+- **Per-persona work folder and a ~10-minute budget per persona.**
+- **Report**: evidence path in brackets in the Finding cell, a Copy line for minor wording issues, and closing Environment and Test data created lines.
+
+Taken in part:
+- **Product constraints** are an input, and fixes must respect them. But a finding is never dropped because its fix breaks a constraint: it is marked "needs design change". A contrast failure under fixed brand colours is still a WCAG failure, and hiding it would make the report less honest.
+- **Throttling**: the tester proposed throttling only for timing measurements. Instead, the mobile persona throttles the first load of each key page and runs the rest unthrottled, while still noting mis-taps, double submits or missing loading feedback. Slowness during interaction is part of what that persona exists to find, so it isn't dropped entirely.
+- **Evidence column**: as in conversion-audit, a bracketed path stays in the Finding cell, keeping the one-line table.
