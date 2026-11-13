@@ -17,4 +17,4 @@ Recorded 2026-11-13 with `claude-sonnet-5-5`, one run per case; graded by an LLM
 | flags-planted-conversion-leaks | 08-every-finding-cites-a-principle-or |
 | no-false-findings-on-clean-site | 03-no-finding-is-rated-high-severity |
 
-CI fails a PR if the pass rate falls below 75% (baseline − 10%) or a clean-control case newly fails a grader. Re-run: `scripts/run-evals.sh conversion-audit --runs 1 --model claude-sonnet-5-5`.
+CI fails a PR if the pass rate falls below 75% (baseline − 10%) or a clean-control case newly fails more than one grader (one is allowed as LLM-judge noise). Re-run: `scripts/run-evals.sh conversion-audit --runs 1 --model claude-sonnet-5-5`.

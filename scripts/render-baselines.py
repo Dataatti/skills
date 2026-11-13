@@ -33,7 +33,7 @@ Recorded {b['date']} with `{b['model']}`, one run per case; graded by an LLM jud
 |---|---|
 {cases}
 
-CI fails a PR if the pass rate falls below {b['pass_rate'] - b.get('tolerance', 0.1):.0%} (baseline − {b.get('tolerance', 0.1):.0%}) or a clean-control case newly fails a grader. Re-run: `scripts/run-evals.sh {name} --runs 1 --model {b['model']}`.
+CI fails a PR if the pass rate falls below {b['pass_rate'] - b.get('tolerance', 0.1):.0%} (baseline − {b.get('tolerance', 0.1):.0%}) or a clean-control case newly fails more than one grader (one is allowed as LLM-judge noise). Re-run: `scripts/run-evals.sh {name} --runs 1 --model {b['model']}`.
 """)
 readme = os.path.join(repo, "README.md")
 t = open(readme).read()

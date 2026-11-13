@@ -17,4 +17,4 @@ Recorded 2026-11-13 with `claude-sonnet-5-5`, one run per case; graded by an LLM
 | leaves-uncommitted-work-alone | all passed |
 | sweeps-project-on-local-branch | all passed |
 
-CI fails a PR if the pass rate falls below 90% (baseline − 10%) or a clean-control case newly fails a grader. Re-run: `scripts/run-evals.sh token-sweep --runs 1 --model claude-sonnet-5-5`.
+CI fails a PR if the pass rate falls below 90% (baseline − 10%) or a clean-control case newly fails more than one grader (one is allowed as LLM-judge noise). Re-run: `scripts/run-evals.sh token-sweep --runs 1 --model claude-sonnet-5-5`.

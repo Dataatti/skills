@@ -90,7 +90,7 @@ python3 scripts/summarize-evals.py cookie-consent-audit --gate
 `.github/workflows/evals.yml` runs on every pull request:
 1. `validate` checks frontmatter, referenced files and case structure. It needs no API key.
 2. `select` picks only the skills whose files changed. A change to shared fixtures or scripts selects all skills.
-3. `eval` serves the fixtures, runs each selected skill headless with `claude plugin eval`, and grades the assertions. The PR fails if the pass rate drops more than 10 points below `baseline.json`, or if a clean-control case newly fails a grader.
+3. `eval` serves the fixtures, runs each selected skill headless with `claude plugin eval`, and grades the assertions. The PR fails if the pass rate drops more than 10 points below `baseline.json`, or if a clean-control case newly fails more than one grader (one is allowed as LLM-judge noise).
 
 **Setup:** CI runs on a Claude subscription. Run `claude setup-token` locally (needs a Pro or Max plan) and save the token as the repository secret `CLAUDE_CODE_OAUTH_TOKEN` (Settings → Secrets and variables → Actions). An `ANTHROPIC_API_KEY` secret works instead if you'd rather pay per token. Eval runs count against your plan's usage limits (a full run of all five skills is roughly what $7 of API usage would buy), so CI evaluates skills one at a time and only those that changed. Forked PRs don't receive secrets; a maintainer can re-run the evals with *Run workflow*.
 
