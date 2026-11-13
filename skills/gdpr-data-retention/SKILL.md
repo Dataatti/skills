@@ -26,6 +26,8 @@ Look in:
 
 `references/checklist.md` lists code patterns to grep for.
 
+If you start a local server, run it as a plain shell background process in the same command (e.g. `python3 -m http.server 8000 >/dev/null 2>&1 &`), not with a background-task tool, and stop it before writing the report. The report must be your last message.
+
 ## 2. Check each item
 
 For every data item run the checks in `references/checklist.md` (IDs DR-xx): purpose, lawful basis, retention period, automatic deletion that actually runs and covers it, erasure path (including processors, logs, backups – soft delete alone is not erasure), minimisation, special-category data, and whether the privacy notice states the period.

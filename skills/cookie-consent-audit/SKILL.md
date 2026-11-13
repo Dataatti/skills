@@ -27,6 +27,8 @@ Run the script first rather than checking for Playwright yourself: it finds glob
 
 Classify every item with `references/tracker-domains.md`: strictly necessary (session, cart, CSRF, load balancer, the consent cookie itself) vs. non-essential (analytics, ads, session replay, A/B testing, social pixels). Local storage and pixels count the same as cookies (EDPB Guidelines 2/2023).
 
+If you start a local server, run it as a plain shell background process in the same command (e.g. `python3 -m http.server 8000 >/dev/null 2>&1 &`), not with a background-task tool, and stop it before writing the report. The report must be your last message.
+
 ## 2. Test the banner and consent flow
 
 Run every check in `references/checklist.md` (IDs CC-xx). Interact like a visitor: look at the first layer, try to reject, open settings, look for a way to change your mind later, reload. Determine what is stored as proof of consent (timestamp, policy version, choices). For US scope, test with GPC on and look for a "Do Not Sell or Share" link when ad or cross-context tracking exists.

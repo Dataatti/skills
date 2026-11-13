@@ -17,6 +17,8 @@ You run the usability test yourself: each persona tries to complete the same tas
 3. **Personas**: every file in `references/personas/` except `TEMPLATE.md` (five ship by default; users may add their own from the template). If the user names a subset, use that.
 4. **Browser**: any browser tool the agent has (Playwright MCP, Claude in Chrome, built-in browser). For Playwright scripts, load it through `scripts/pw.cjs` in this skill's folder (`const { launch } = require("<skill-dir>/scripts/pw.cjs")`); it fixes read-only temp dirs and hidden browser installs that break launches in sandboxes. Check first with `node <skill-dir>/scripts/pw.cjs --check`. Only if no browser works, do a code-only review and say so at the top of the report; keyboard and screen-reader findings then come from markup (e.g. `<div onclick>` without `tabindex`/`role`, inputs without labels), and mark rendering-dependent findings (contrast, reflow, overlap) "unverified" with severity at most 2.
 
+If you start a local server, run it as a plain shell background process in the same command (e.g. `python3 -m http.server 8000 >/dev/null 2>&1 &`), not with a background-task tool, and stop it before writing the report. The report must be your last message.
+
 ## 2. Run one tester per persona
 
 If you have a subagent tool (Agent/Task), you **must** spawn one subagent per persona, all in one turn. Don't role-play the personas yourself when subagents exist: separate contexts are what keep each persona's experience independent. Give each only: the target URL (start the server first so they all share it; each uses its own fresh browser context), the task list, its persona file path, `references/wcag-22-aa.md`, `references/heuristics.md`, the path to `scripts/pw.cjs`, and this brief:

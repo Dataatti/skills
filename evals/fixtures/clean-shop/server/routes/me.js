@@ -7,8 +7,9 @@ module.exports = function register(app, db) {
     const { email, stripe_customer_id: stripeCustomerId } = req.user;
     await db.tx(async (t) => {
       // Orders are kept for bookkeeping (Art. 17(3)(b)); unlink them from the person.
-      await t.query("UPDATE orders SET customer_id = NULL WHERE customer_id = $1", [id]);
-      await t.query("DELETE FROM customers WHERE id = $1", [id]); // cascades to addresses, tickets
+      await t.query("UPDATE orders SET customer_id = NULL, customer_email = NULL WHERE customer_id = $1 OR customer_email = $2", [id, email]);
+      await t.query("DELETE FROM support_tickets WHERE customer_id = $1 OR email = $2", [id, email]);
+      await t.query("DELETE FROM customers WHERE id = $1", [id]); // cascades to addresses, reviews
       await t.query("DELETE FROM newsletter_subscribers WHERE email = $1", [email]);
     });
     // Erase at processors and tell recipients (Art. 17, 19): Brevo contact + Stripe redaction job.

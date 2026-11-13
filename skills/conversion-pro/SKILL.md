@@ -18,6 +18,8 @@ From the site (or code: routes, nav, CTAs, forms, payment integration), list the
 
 Use whatever browser tool exists (Playwright MCP, Claude in Chrome, built-in browser). For Playwright scripts, load it through `scripts/pw.cjs` in this skill's folder (`const { launch } = require("<skill-dir>/scripts/pw.cjs")`; check with `node <skill-dir>/scripts/pw.cjs --check`); it fixes read-only temp dirs and hidden browser installs in sandboxes. For a local project, serve it first (e.g. `python3 -m http.server`) and give reviewers the URL. If no browser is possible, review the code instead and say so in the report ("Code-only review: speed, layout and mobile were inferred, not observed").
 
+If you start a local server, run it as a plain shell background process in the same command (e.g. `python3 -m http.server 8000 >/dev/null 2>&1 &`), not with a background-task tool, and stop it before writing the report. The report must be your last message.
+
 ## 3. Run five independent reviewers
 
 Run **five reviewers with no shared context**. Independence is the point: agreement between agents that did not see each other's notes is the confidence signal, so never pass one reviewer's findings to another.

@@ -47,7 +47,12 @@ CREATE TABLE support_tickets (
   customer_id uuid REFERENCES customers(id) ON DELETE CASCADE,
   email       text NOT NULL,
   body        text NOT NULL,
-  closed_at   timestamptz                         -- retention: 12 months after closed_at
+  last_activity_at timestamptz NOT NULL DEFAULT now(),
+  closed_at   timestamptz                         -- retention: 12 months after closed_at (or 12 months of inactivity if never closed)
+);
+
+CREATE TABLE processor_erasure_retry (           -- transient queue; rows deleted once the processor confirms
+  email text, stripe_customer_id text, attempts integer NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE consent_log (
@@ -67,4 +72,15 @@ CREATE TABLE data_requests (
   kind        text NOT NULL CHECK (kind IN ('access', 'erasure')),
   opened_at   timestamptz NOT NULL DEFAULT now(),
   closed_at   timestamptz                         -- retention: request log kept 3 years after closing
+);
+
+-- Product reviews: shown with first name and city only. Retention: 3 years after publication,
+-- then anonymised to "Verified buyer". Deleted on erasure.
+CREATE TABLE reviews (
+  id           uuid PRIMARY KEY,
+  customer_id  uuid REFERENCES customers(id) ON DELETE CASCADE,
+  display_name text NOT NULL,                    -- first name + city, chosen by the reviewer
+  body         text NOT NULL,
+  rating       smallint NOT NULL,
+  published_at timestamptz NOT NULL
 );
