@@ -78,3 +78,12 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
   - Trigger sets stay at 12 queries each rather than ~20. Expand them when running the description optimiser.
   - No public-suffix list in scan.cjs, to avoid a runtime dependency; the limit is documented.
   - The usability graders for "one Task call per persona" were left as a follow-up. Today the instruction is enforced by the SKILL text and checked in traces by hand.
+
+## Baselines (recorded 2026-11-13)
+- **Source runs**: the latest complete run per skill. That is iteration 4 for cookie-consent-audit, gdpr-data-retention and conversion-pro, and iteration 3 for usability-testing and token-sweep.
+- **The final round didn't run**: a last re-run of gdpr-data-retention and conversion-pro hit the account's 5-hour usage limit, so it was not recorded. That round followed one more hardening of the clean fixture: atomic processor-erasure queue, Add to cart above the fold on mobile, inline validation and contained images. Those changes can only remove clean-site findings, so the recorded baselines are conservative.
+- **Remaining clean-site failures at baseline are genuine, not hallucinated**:
+  - gdpr-data-retention: non-atomic processor erasure, rated High, since fixed in the fixture.
+  - conversion-pro: Add to cart below the fold and an overflowing image on mobile, both since fixed in the fixture.
+- **First CI run**: after it, re-record baselines with `python3 scripts/summarize-evals.py <skill> --write-baseline` and `python3 scripts/render-baselines.py`.
+- **Cost**: usability-testing is the most expensive skill (≈$3.60 and ~19 min per eval run), because it runs five persona subagents with real browsers. conversion-pro is next (≈$2).

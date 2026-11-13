@@ -1,0 +1,20 @@
+{
+  "pass_rate": 0.933,
+  "tolerance": 0.1,
+  "model": "claude-sonnet-5-5",
+  "date": "2026-11-13",
+  "time_seconds": 231,
+  "tokens": 61591,
+  "cost_usd": 0.37,
+  "without_skill_pass_rate": 0.733,
+  "cases": {
+    "flags-planted-consent-issues": {
+      "failed": [
+        "08-every-listed-failure-includes-a-fix"
+      ]
+    },
+    "no-false-findings-on-clean-site": {
+      "failed": []
+    }
+  }
+}

@@ -64,7 +64,13 @@ Each skill has eval cases in `skills/<name>/evals/`, written in [skill-creator](
 The tables below give one run per case. Both arms use the same model (Claude Sonnet 5.5) and an LLM judge. Pass rate is the share of graders passed. Tokens exclude cache reads.
 
 <!-- BASELINES:START -->
-_Filled in from `skills/<name>/evals/baseline.json`._
+| Skill | With skill | Without skill | Time (s) | Tokens | Cost (USD) |
+|---|---|---|---|---|---|
+| conversion-pro | 85% | 69% | 450 | 1,517,431 | 2.0 |
+| cookie-consent-audit | 93% | 73% | 231 | 61,591 | 0.37 |
+| gdpr-data-retention | 87% | 73% | 145 | 72,698 | 0.48 |
+| token-sweep | 100% | 67% | 70 | 32,363 | 0.22 |
+| usability-testing | 100% | 42% | 1159 | 5,850,751 | 3.57 |
 <!-- BASELINES:END -->
 
 ### Run them yourself

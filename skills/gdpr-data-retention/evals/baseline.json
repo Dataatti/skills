@@ -1,0 +1,21 @@
+{
+  "pass_rate": 0.867,
+  "tolerance": 0.1,
+  "model": "claude-sonnet-5-5",
+  "date": "2026-11-13",
+  "time_seconds": 145,
+  "tokens": 72698,
+  "cost_usd": 0.48,
+  "without_skill_pass_rate": 0.733,
+  "cases": {
+    "flags-planted-retention-issues": {
+      "failed": []
+    },
+    "no-false-findings-on-clean-app": {
+      "failed": [
+        "01-the-report-does-not-list-any",
+        "05-no-invented-failures"
+      ]
+    }
+  }
+}

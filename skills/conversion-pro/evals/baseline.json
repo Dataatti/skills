@@ -1,0 +1,22 @@
+{
+  "pass_rate": 0.846,
+  "tolerance": 0.1,
+  "model": "claude-sonnet-5-5",
+  "date": "2026-11-13",
+  "time_seconds": 450,
+  "tokens": 1517431,
+  "cost_usd": 2.0,
+  "without_skill_pass_rate": 0.692,
+  "cases": {
+    "flags-planted-conversion-leaks": {
+      "failed": [
+        "08-every-finding-cites-a-principle-or"
+      ]
+    },
+    "no-false-findings-on-clean-site": {
+      "failed": [
+        "03-no-finding-is-rated-high-severity"
+      ]
+    }
+  }
+}

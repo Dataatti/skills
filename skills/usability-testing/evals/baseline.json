@@ -1,0 +1,18 @@
+{
+  "pass_rate": 1.0,
+  "tolerance": 0.1,
+  "model": "claude-sonnet-5-5",
+  "date": "2026-11-13",
+  "time_seconds": 1159,
+  "tokens": 5850751,
+  "cost_usd": 3.57,
+  "without_skill_pass_rate": 0.417,
+  "cases": {
+    "flags-planted-usability-issues": {
+      "failed": []
+    },
+    "no-false-findings-on-clean-site": {
+      "failed": []
+    }
+  }
+}
