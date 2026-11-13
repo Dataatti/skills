@@ -99,6 +99,8 @@ jobs:
             --threshold 0 -j 1 --keep-temp --max-cost-usd 15
 
       - name: Gate against baseline
+        # Explicit bash = `bash -eo pipefail`, so a FAIL from the gate fails the step instead of being masked by tee.
+        shell: bash
         run: python3 scripts/summarize-evals.py "${{ matrix.skill }}" --gate | tee -a "$GITHUB_STEP_SUMMARY"
 
       - if: always()

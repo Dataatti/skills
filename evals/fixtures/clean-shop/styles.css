@@ -26,7 +26,7 @@ table { border-collapse:collapse; } td, th { padding:.4rem .8rem; text-align:lef
 #consent-banner .actions { display:flex; gap:1rem; flex-wrap:wrap; }
 #consent-banner[hidden], #consent-prefs[hidden] { display:none; }
 fieldset { border:1px solid #888; margin-top:1rem; }
-@media (max-width: 30rem) { nav ul { gap:1rem; } #consent-banner p { font-size:.95rem; } #consent-banner .actions button { flex:1 1 40%; } }
+@media (max-width: 30rem) { nav ul { gap:1rem; } #consent-banner p { font-size:.95rem; } }
 label.inline { display:inline; font-weight:400; }
 .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 fieldset.secure { border:2px solid var(--brand); border-radius:6px; background:#f4faf6; }
@@ -38,3 +38,17 @@ body.banner-open { scroll-padding-bottom: 50vh; }
 img { max-width:100%; height:auto; }
 input[type=radio], input[type=checkbox] { width:24px; height:24px; vertical-align:middle; margin-right:.4rem; }
 footer a, #edit-cart { display:inline-block; padding:.6rem .25rem; }
+/* Compact consent banner on phones: one short line of text, buttons in one row, details on demand. */
+@media (max-width: 40rem) {
+  /* In page flow at the top instead of a fixed overlay, so it never covers a call to action. */
+  #consent-banner { position:static; max-height:none; box-shadow:none; border-top:0; border-bottom:3px solid var(--brand); padding:.5rem .75rem; }
+  #consent-banner h2 { font-size:1rem; margin:0; }
+  #consent-banner p { font-size:.9rem; margin:.25rem 0; }
+  #consent-banner .actions { gap:.4rem; flex-wrap:nowrap; }
+  #consent-banner .actions button { flex:1 1 0; padding:.5rem .4rem; font-size:.95rem; }
+  body.banner-open { padding-bottom: 0; }
+  /* Cart table stacks on narrow screens */
+  .table-wrap table, .table-wrap tbody, .table-wrap tr, .table-wrap td, .table-wrap tfoot, .table-wrap th { display:block; }
+  .table-wrap thead { position:absolute; left:-9999px; }
+  .table-wrap tr { border-bottom:1px solid #ccc; padding:.4rem 0; }
+}

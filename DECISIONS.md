@@ -91,3 +91,9 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
 - **Subscription token, API key as fallback.** CI authenticates with `CLAUDE_CODE_OAUTH_TOKEN`, made by `claude setup-token`, so evals run on the owner's Claude subscription rather than per-token billing. The same mechanism is supported by `anthropics/claude-code-action` as `claude_code_oauth_token`. `ANTHROPIC_API_KEY` stays as a fallback. When the token is present, the key is blanked so it can't take precedence.
 - **Runs are serialised** (`max-parallel: 1`, `-j 1`): subscription runs share the plan's 5-hour usage window, and this session hit that limit twice while recording baselines. A failed run caused by the limit shows up as an API error in the eval log, not as a skill regression.
 - **The `--max-cost-usd` cap stays.** It is a client-side estimate that still bounds how much of the usage window one run can take.
+
+## First CI run on the subscription (2026-11-13)
+- **Gate bug fixed.** The gate step piped `summarize-evals.py` through `tee`. GitHub's default shell (`bash -e`) has no `pipefail`, so a **FAIL** from the gate (the conversion-audit clean case regressed) still left the job green. The step now sets `shell: bash`, which runs `bash -eo pipefail`.
+- **Clean fixture, mobile consent banner.** Five out of five conversion reviewers rated the fixed bottom banner High because, on a 375 px screen, it covered "Add to cart" and Pay. On narrow screens the banner is now a compact bar in the normal page flow at the top, so it pushes content down instead of covering it. It is still a fixed overlay on desktop. Consent behaviour is unchanged (verified with scan.cjs).
+- **Clean fixture, other fixes.** The cart table stacks on narrow screens, and the product page offers quantities 1–10 to match the cart.
+- **First CI pass rates** (one run each): cookie 100%, gdpr 100%, agent-usability-test 92%, token-sweep 100%, conversion 85%.
