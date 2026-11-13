@@ -51,3 +51,30 @@ Choices made without asking, one line of reasoning each. Newest at the bottom of
 - **CI installs bubblewrap and socat**, because `claude plugin eval` refuses to grant Bash without an OS sandbox. It also relaxes Ubuntu 24.04's user-namespace restriction, which bubblewrap needs.
 - **A static `validate` job** (frontmatter, referenced files, case structure, trigger evals) runs first and needs no API key.
 - **Forked PRs don't get secrets**, so the eval job fails with a clear message there. Maintainers can re-run via `workflow_dispatch`.
+
+## Independent review (two reviewer subagents that didn't write the skills)
+- **Answer leak fixed.** The example rows in four SKILL.md files mirrored planted issues (e.g. the €9.90 surprise shipping, the `<div>` Continue button, lodash 4.17.15), so a skill could pass by copying its template. They now use neutral examples from other domains.
+- **Clean fixture hardened a second time**, for issues each skill's own checklist would rightly flag:
+  - Consent and GPC: the GPC opt-out is now confirmed on the page, withdrawal deletes `_ga`, and there is a "Your Privacy Choices" statement.
+  - Erasure: Stripe redaction replaces `customers.del`, and the newsletter is purged after 3 years without engagement.
+  - Data handling: guest-order email kept 90 days, a dormant-account warning, and purges pause during open access requests.
+  - Interface: the cart keeps focus on updates, and the consent banner is compact on mobile.
+  - Checkout: delivery date estimate, Luhn check, and all reviews linked.
+- **Stricter clean-site graders**: a grader in every clean case now forbids *any* invented failure, not just high-severity ones.
+- **Severity scales aligned**:
+  - Usability: a blocked core task = 4; a non-blocking WCAG failure = 2–3; a code-only, unobserved finding ≤ 2.
+  - Conversion uses Critical/High/Medium/Low throughout.
+- **Persona checks now carry WCAG exceptions**: data tables are exempt from 1.4.10 reflow, and 2.5.8 target size has its spacing exception, so personas don't flag compliant pages.
+- **token-sweep is safe unattended**:
+  - It never blocks on a question; unsure items stay "Suggested".
+  - A dirty tree is handled in a separate `git worktree`, never by stash, reset or commit.
+  - Existing branch names get a `-2` suffix.
+  - It has a new negative eval (`leaves-uncommitted-work-alone`).
+  - The score line is "Checked N areas · Done D · Suggested S".
+- **usability-testing and conversion-pro ship `scripts/pw.cjs`**. Round-2 traces showed agents falling back to code-only because Chromium couldn't launch in the eval sandbox. The helper fixes the temp dir and browser path and has a `--check` mode. Usability-testing must now spawn one subagent per persona when a subagent tool exists; round 2 role-played them in one context.
+- **cookie scan.cjs** now also lists IndexedDB databases and documents its two-label "same site" approximation.
+- **Reference fixes**: dead Deloitte PDF links replaced, SemVer section corrected, an authoring note removed from retention-guidance, and a CC-15 rule added: not applicable when nothing is sold or shared.
+- **Not done (deliberately)**:
+  - Trigger sets stay at 12 queries each rather than ~20. Expand them when running the description optimiser.
+  - No public-suffix list in scan.cjs, to avoid a runtime dependency; the limit is documented.
+  - The usability graders for "one Task call per persona" were left as a follow-up. Today the instruction is enforced by the SKILL text and checked in traces by hand.
