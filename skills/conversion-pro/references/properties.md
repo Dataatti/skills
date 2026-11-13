@@ -66,7 +66,7 @@ Baymard figures come from the public pages only, because the full benchmark is p
 - **Look for:** "Good" thresholds at the 75th percentile of real users: **LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1**. Business link: Deloitte/Google 2020 found +0.1 s speed across the journey went with +8.4% retail and +10.1% travel conversions. Google/SOASTA 2017 found bounce probability +32% going from 1 s to 3 s load.
 - **Test:** Run Lighthouse or PageSpeed Insights (lab) and check the CrUX field data if it is available, for home, category, product, cart and checkout pages on mobile. Note third-party scripts on checkout.
 - **Severity:** High if LCP > 4 s, INP > 500 ms or CLS > 0.25 (the "poor" thresholds) on key pages. Medium if in "needs improvement".
-- **Source:** https://web.dev/articles/vitals · https://web.dev/case-studies/milliseconds-make-millions · https://www2.deloitte.com/content/dam/Deloitte/ie/Documents/Consulting/Milliseconds_Make_Millions_report.pdf
+- **Source:** https://web.dev/articles/vitals · https://web.dev/case-studies/milliseconds-make-millions
 
 ### CV-10 Form input usability
 - **Look for:** Correct `type` / `inputmode` (email, tel, numeric) and `autocomplete` tokens (`name`, `email`, `street-address`, `postal-code`, `cc-number`, `one-time-code`). Visible labels, not placeholder-only. Address autocomplete or lookup. Single full-name field where possible. No split card number fields. Baymard: **61%** of mobile sites use the wrong keyboard for at least one field.

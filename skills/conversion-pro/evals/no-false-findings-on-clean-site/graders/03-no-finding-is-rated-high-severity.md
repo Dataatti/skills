@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-No finding is rated high severity and found by 4 or more of 5 reviewers.
+No finding rated Critical or High is reported by 4 or more of the 5 reviewers.

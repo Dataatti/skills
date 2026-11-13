@@ -12,11 +12,14 @@ Turn leftover budget into a ranked list of useful work, plus small safe fixes al
 
 ## Ground rules
 
-- **New branch only.** First `git status`; if the tree is dirty, stop and ask (don't stash someone's work). Create `token-sweep/<YYYY-MM-DD>` from the current HEAD. Commit there.
+The user is usually away, so never block on a question: when unsure, leave the item as "Suggested".
+
+- **New branch only.** Create `token-sweep/<YYYY-MM-DD>` from the current HEAD (add `-2`, `-3`… if it exists) and commit there.
+- **Never touch uncommitted work.** If `git status` shows changes, don't stash, commit or check out over them: create the branch in a separate worktree (`git worktree add ../<repo>-token-sweep -b token-sweep/<date> HEAD`) and work there. If that isn't possible, do the sweep read-only.
 - **If a branch can't be created** (no git, read-only `.git`, sandbox), don't edit tracked files at all. Do the whole sweep read-only, mark everything "Suggested", and say why in the report.
 - **Never push, deploy, publish, or open PRs.** Never run release, deploy or migration scripts. The user reviews the branch.
 - Prefer finishing a few things well over starting many.
-- Ask before anything costly or irreversible (large dependency upgrades, deleting files).
+- Anything costly or irreversible (major upgrades, deleting files, migrations) stays "Suggested".
 
 ## 1. Look at the project (5 minutes)
 
@@ -33,7 +36,7 @@ Skip the ones that don't apply and say why in one line. If a skill is not instal
 
 ## 2. Run in parallel
 
-Spawn subagents in one turn when you can: one per applicable audit skill (each tells it to use that skill on this project, report only) plus one **job scanner** using `references/jobs.md`. Without subagents, run them one after another, the job scanner first.
+Spawn subagents in one turn when you can: one per applicable audit skill (each tells it to use that skill on this project, report only) plus one **job scanner** using `references/jobs.md`. Without subagents, run them one after another, the job scanner first. Audit skills that normally fan out (usability-testing's personas, conversion-pro's five reviewers) use their own documented fallback when running inside a subagent that can't spawn more.
 
 The job scanner looks for: likely bugs (wrong maths, unchecked errors, off-by-one, TODO/FIXME that describe real defects), outdated or vulnerable dependencies (`npm outdated`/`npm audit`, `pip list --outdated`, etc. – or compare versions to known CVEs when offline), code without tests, failing or placeholder test scripts, docs gaps (no install/run steps), and lint/type errors. Every item gets evidence (file:line, command output) and a principle or source from `references/jobs.md`.
 
@@ -49,14 +52,14 @@ Rank by impact ÷ effort (impact: High/Med/Low; effort: S ≤ 30 min, M ≤ half
 
 ```
 # Token sweep – <repo> – <date>
-Branch: token-sweep/<date> (local, not pushed) · Done: 3 · Suggested: 9
+Checked 6 areas · Done 3 · Suggested 9 · Branch: token-sweep/<date> (local, not pushed)
 Skills run: cookie-consent-audit, gdpr-data-retention · Skipped: conversion-pro (no checkout)
 
 | # | Item | Impact | Effort | Status | Evidence / why |
 |---|---|---|---|---|---|
-| 1 | Percentage discount applies 100× ("10%" → −1000%) | High | S | Done (abc123, test added) | src/pricing.js:7 |
-| 2 | lodash 4.17.15 has known CVEs | High | S | Done (patch bump) | CVE-2021-23337; OWASP A06 |
-| 3 | GA loads before consent | High | M | Suggested | cookie-consent-audit CC-01 |
+| 1 | Pagination skips the last item (off-by-one) | High | S | Done (abc123, test added) | src/list.js:42 |
+| 2 | axios pinned to a version with a known CVE | High | S | Done (patch bump) | npm audit; OWASP A03:2025 |
+| 3 | Account deletion only soft-deletes | High | M | Suggested | gdpr-data-retention DR-08 |
 ...
 Review with: git log main..token-sweep/<date>
 ```

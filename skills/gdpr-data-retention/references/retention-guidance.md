@@ -74,7 +74,7 @@ Source: [Storage limitation (tietosuoja.fi)](https://tietosuoja.fi/en/storage-li
 3. **Logs vs. legal claims.** ICO says consider keeping data to defend future claims; CNIL says log retention cannot be justified by the criminal limitation period alone and caps normal logs at 6–12 months. Keep only what a specific, documented claim risk needs.
 4. **Anonymisation as erasure.** Regulators accept true anonymisation (ICO, Finnish DPA, CNIL), but the EDPB 2026 report flags weak "anonymisation" used instead of deletion as a common failure. Hashing an email or nulling only the name is pseudonymisation, not anonymisation.
 5. **Backups.** ICO: "beyond use" until overwritten is acceptable. EDPB: backup data can still fall within access requests. Both: tell people about backup cycles.
-6. **Brief inconsistency in the task brief:** UK Companies Act s.388 requires 3 years (private) / 6 years (public), not 6 years for all; HMRC requires 6 years for company tax records. See `legal-minimums.md`.
+6. **Common misconception – "UK: 6 years for all records":** UK Companies Act s.388 requires 3 years (private) / 6 years (public), not 6 years for all; HMRC requires 6 years for company tax records. See `legal-minimums.md`.
 
 ## Rule of precedence for the skill
 Statute that **requires** retention > the competent supervisory authority's guidance/decisions (lead authority for the controller's main establishment, plus the authority where affected users are) > EDPB guidance > other regulators' examples > industry practice. **When a regulator and a blog/vendor disagree, the regulator wins**; when two regulators differ, apply the one competent for the controller and note the stricter one.

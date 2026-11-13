@@ -5,6 +5,7 @@ body { margin:0; font: 1.0625rem/1.5 system-ui, sans-serif; color:var(--text); b
 .skip-link:focus { left:1rem; z-index:100; }
 header, main, footer { max-width: 60rem; margin: 0 auto; padding: 1rem; }
 nav ul { list-style:none; display:flex; gap:1.5rem; padding:0; flex-wrap:wrap; }
+nav a { display:inline-block; padding:.6rem .25rem; min-height:44px; }
 a { color: var(--brand); }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 button, .button { display:inline-block; min-height:44px; min-width:44px; padding:.65rem 1.25rem; font:inherit; border-radius:6px; border:2px solid var(--brand); cursor:pointer; text-decoration:none; }
@@ -19,15 +20,18 @@ input, select { font:inherit; padding:.6rem; width:100%; max-width:28rem; border
 .price { font-size:1.25rem; font-weight:700; }
 .trust { border-top:1px solid #ccc; margin-top:2rem; padding-top:1rem; }
 table { border-collapse:collapse; } td, th { padding:.4rem .8rem; text-align:left; }
-#consent-banner { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:3px solid var(--brand); padding:1rem; box-shadow:0 -2px 8px rgba(0,0,0,.2); }
+#consent-banner { position:fixed; bottom:0; left:0; right:0; max-height:50vh; overflow-y:auto; background:#fff; border-top:3px solid var(--brand); padding:.75rem 1rem; box-shadow:0 -2px 8px rgba(0,0,0,.2); }
+#consent-banner h2 { font-size:1.1rem; margin:.25rem 0; }
+#consent-banner p { margin:.4rem 0; }
 #consent-banner .actions { display:flex; gap:1rem; flex-wrap:wrap; }
 #consent-banner[hidden], #consent-prefs[hidden] { display:none; }
 fieldset { border:1px solid #888; margin-top:1rem; }
-@media (max-width: 30rem) { nav ul { gap:1rem; } }
+@media (max-width: 30rem) { nav ul { gap:1rem; } #consent-banner p { font-size:.95rem; } #consent-banner .actions button { flex:1 1 40%; } }
 label.inline { display:inline; font-weight:400; }
 .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 fieldset.secure { border:2px solid var(--brand); border-radius:6px; background:#f4faf6; }
 fieldset[hidden] { display:none; }
 .reviews { padding-left:1rem; }
-body.banner-open { padding-bottom: 16rem; }
-html { scroll-padding-bottom: 16rem; }
+body.banner-open { padding-bottom: 50vh; }
+body.banner-open { scroll-padding-bottom: 50vh; }
+.table-wrap { overflow-x:auto; }

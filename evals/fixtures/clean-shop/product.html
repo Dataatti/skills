@@ -12,11 +12,11 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="consent-banner" role="region" aria-labelledby="consent-title" hidden>
   <h2 id="consent-title" tabindex="-1">Cookies on Kettle &amp; Co</h2>
-  <p>We use necessary cookies to run the shop (your cart and this choice). With your permission we also use analytics cookies (Google Analytics) to see which pages are used. We do not use marketing cookies today. <a href="privacy.html#cookies">Read more</a></p>
+  <p>We use necessary cookies for your cart. With your permission we also use Google Analytics to see which pages are used. No marketing cookies. <a href="privacy.html#cookies">Read more</a></p>
   <div class="actions">
     <button id="consent-accept" class="primary">Accept all</button>
     <button id="consent-reject" class="primary">Reject all</button>
-    <button id="consent-customise" class="secondary">Choose cookies</button>
+    <button id="consent-customise" class="secondary" aria-expanded="false" aria-controls="consent-prefs">Choose cookies</button>
   </div>
   <div id="consent-prefs" hidden>
     <fieldset>
@@ -50,7 +50,7 @@
 <ul>
   <li>Origin: Shizuoka, Japan. Certified organic (EU organic logo).</li>
   <li>About 50 cups per pouch. Store cool and dry.</li>
-  <li>Shipping €4.90, free over €40. Order by 14:00 for same-day dispatch – delivered in 1–3 working days.</li>
+  <li>Shipping €4.90, free over €40. Order by 14:00 for same-day dispatch – estimated delivery <strong data-eta>in 1–3 working days</strong>.</li>
   <li>Free returns within 30 days (<a href="returns.html">returns policy</a>).</li>
 </ul>
 <form action="cart.html" method="get">
@@ -59,11 +59,12 @@
   <select id="qty" name="qty"><option>1</option><option>2</option><option>3</option><option>4</option></select>
   <p><button type="submit" class="primary">Add to cart</button></p>
 </form>
-<section id="reviews"><h2>Reviews</h2><ul class="reviews"><li><p>“Smooth and fresh, arrived in two days.”</p><p class="hint">Aino, Tampere – 4 out of 5 – October 2026</p></li><li><p>“Good tea but I'd like a bigger pouch.”</p><p class="hint">Mikko, Oulu – 3 out of 5 – September 2026</p></li></ul></section>
+<section id="reviews"><h2>Reviews</h2><p>Showing the 2 most recent reviews, including critical ones. <a href="reviews.html">Read all reviews</a></p><ul class="reviews"><li><p>“Smooth and fresh, arrived in two days.”</p><p class="hint">Aino, Tampere – 4 out of 5 – October 2026</p></li><li><p>“Good tea but I'd like a bigger pouch.”</p><p class="hint">Mikko, Oulu – 3 out of 5 – September 2026</p></li></ul></section>
 </main>
 <footer class="trust">
   <p>Secure payment by card, MobilePay or invoice. Questions? <a href="help.html">Contact us</a> – we reply within one working day. Phone +358 2 555 0100.</p>
-  <p><a href="privacy.html">Privacy notice</a> · <a href="#" id="cookie-settings-link">Cookie settings</a> · <a href="returns.html">Returns policy</a></p>
+  <p><a href="privacy.html">Privacy notice</a> · <a href="#" id="cookie-settings-link">Cookie settings</a> · <a href="privacy.html#choices">Your Privacy Choices</a> · <a href="returns.html">Returns policy</a></p>
+  <p id="gpc-status" hidden>✓ Opt-out request honoured: your browser's Global Privacy Control signal is on, so analytics stays off.</p>
   <p>Kettle &amp; Co Oy, Business ID 1234567-8, Turku, Finland</p>
 </footer>
 </body>

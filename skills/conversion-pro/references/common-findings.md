@@ -74,7 +74,7 @@ As of: https://baymard.com/lists/cart-abandonment-rate (updated 2026-10-28). The
 | Finding | Evidence | Source / as-of |
 |---|---|---|
 | Small speed gains move revenue | +0.1 s across mobile journey: +8.4% retail conversions, +10.1% travel, +9.2% retail AOV. Google-commissioned, Deloitte, 2020, 37 brands. | https://www.deloitte.com/ie/en/services/consulting/research/milliseconds-make-millions.html ; https://web.dev/case-studies/milliseconds-make-millions |
-| Bounce rises with load time | Probability of bounce +32% from 1 s to 3 s load (Google/SOASTA, 2017). The original Think with Google URL now redirects; the figure is reproduced in the Deloitte report. | https://www2.deloitte.com/content/dam/Deloitte/ie/Documents/Consulting/Milliseconds_Make_Millions_report.pdf |
+| Bounce rises with load time | Probability of bounce +32% from 1 s to 3 s load (Google/SOASTA, 2017). The original Think with Google URL now redirects; the figure is reproduced in the Deloitte report. | https://www.deloitte.com/ie/en/services/consulting/research/milliseconds-make-millions.html |
 | CWV thresholds | Good: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 (p75). | https://web.dev/articles/vitals |
 
 **Caution.** The widely quoted "53% of mobile visits abandoned after 3 s" could not be traced to a live primary source in this check. Don't cite it unless you can verify it.

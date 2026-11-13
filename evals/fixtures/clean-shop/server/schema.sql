@@ -7,7 +7,9 @@ CREATE TABLE customers (
   email         text NOT NULL UNIQUE,          -- purpose: login, receipts | basis: contract | retention: 24 months after last_login_at
   full_name     text NOT NULL,
   password_hash text NOT NULL,
+  stripe_customer_id text,                       -- Stripe reference; erased via Stripe redaction on deletion
   last_login_at timestamptz NOT NULL,
+  inactivity_notice_sent_at timestamptz,         -- warned 30 days before the 24-month inactivity purge
   created_at    timestamptz NOT NULL DEFAULT now()
 );
 
@@ -27,13 +29,16 @@ CREATE TABLE orders (
   customer_id    uuid REFERENCES customers(id) ON DELETE SET NULL,
   billing_name   text NOT NULL,
   billing_street text NOT NULL,
+  customer_email text,                          -- receipt/delivery/returns only: nulled 90 days after delivery
+  delivered_at   timestamptz,
   total_cents    integer NOT NULL,
   created_at     timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE newsletter_subscribers (
-  email          text PRIMARY KEY,               -- basis: consent | retention: until unsubscribe
+  email          text PRIMARY KEY,               -- basis: consent | retention: until unsubscribe or 3 years without opening a letter
   consented_at   timestamptz NOT NULL,
+  last_engaged_at timestamptz NOT NULL,
   consent_text_version text NOT NULL
 );
 
@@ -51,4 +56,15 @@ CREATE TABLE consent_log (
   policy_version text NOT NULL,
   choices     jsonb NOT NULL,                    -- no IP stored; consent id only
   expires_at  timestamptz NOT NULL               -- retention: expires_at + 3 years
+);
+
+-- Open access/erasure requests (GDPR Art. 12(3): answered within one month). Purges skip people
+-- with an open access request so the data can still be disclosed first.
+CREATE TABLE data_requests (
+  id          uuid PRIMARY KEY,
+  customer_id uuid,
+  email       text NOT NULL,
+  kind        text NOT NULL CHECK (kind IN ('access', 'erasure')),
+  opened_at   timestamptz NOT NULL DEFAULT now(),
+  closed_at   timestamptz                         -- retention: request log kept 3 years after closing
 );

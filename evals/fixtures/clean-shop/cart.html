@@ -12,11 +12,11 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 <div id="consent-banner" role="region" aria-labelledby="consent-title" hidden>
   <h2 id="consent-title" tabindex="-1">Cookies on Kettle &amp; Co</h2>
-  <p>We use necessary cookies to run the shop (your cart and this choice). With your permission we also use analytics cookies (Google Analytics) to see which pages are used. We do not use marketing cookies today. <a href="privacy.html#cookies">Read more</a></p>
+  <p>We use necessary cookies for your cart. With your permission we also use Google Analytics to see which pages are used. No marketing cookies. <a href="privacy.html#cookies">Read more</a></p>
   <div class="actions">
     <button id="consent-accept" class="primary">Accept all</button>
     <button id="consent-reject" class="primary">Reject all</button>
-    <button id="consent-customise" class="secondary">Choose cookies</button>
+    <button id="consent-customise" class="secondary" aria-expanded="false" aria-controls="consent-prefs">Choose cookies</button>
   </div>
   <div id="consent-prefs" hidden>
     <fieldset>
@@ -41,25 +41,26 @@
   
 </header>
 <main id="main">
-<h1>Your cart</h1>
+<h1 id="cart-heading" tabindex="-1">Your cart</h1>
+<p id="cart-status" role="status"></p>
 <div id="cart-empty" hidden><p>Your cart is empty. <a href="index.html">Browse teas</a></p></div>
 <form id="cart-form" action="checkout.html" method="get">
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th scope="col">Item</th><th scope="col">Quantity</th><th scope="col">Price</th><th scope="col"><span class="visually-hidden">Remove</span></th></tr></thead>
   <tbody id="cart-rows"></tbody>
   <tfoot>
     <tr><th scope="row">Shipping</th><td></td><td id="cart-shipping"></td><td></td></tr>
     <tr><th scope="row">Total incl. VAT</th><td></td><td><strong id="cart-total"></strong></td><td></td></tr>
   </tfoot>
-</table>
-<p id="cart-status" role="status"></p>
+</table></div>
 <p><button type="submit" class="primary">Go to checkout</button></p>
 <p>No account needed. You can check out as a guest.</p>
 </form>
 </main>
 <footer class="trust">
   <p>Secure payment by card, MobilePay or invoice. Questions? <a href="help.html">Contact us</a> – we reply within one working day. Phone +358 2 555 0100.</p>
-  <p><a href="privacy.html">Privacy notice</a> · <a href="#" id="cookie-settings-link">Cookie settings</a> · <a href="returns.html">Returns policy</a></p>
+  <p><a href="privacy.html">Privacy notice</a> · <a href="#" id="cookie-settings-link">Cookie settings</a> · <a href="privacy.html#choices">Your Privacy Choices</a> · <a href="returns.html">Returns policy</a></p>
+  <p id="gpc-status" hidden>✓ Opt-out request honoured: your browser's Global Privacy Control signal is on, so analytics stays off.</p>
   <p>Kettle &amp; Co Oy, Business ID 1234567-8, Turku, Finland</p>
 </footer>
 </body>

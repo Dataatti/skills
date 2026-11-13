@@ -54,3 +54,12 @@ Fixtures:
 - SW-3 No tests for src/pricing.js; test script is a placeholder.
 - SW-4 README lacks install/run instructions.
 - SW-5 public/index.html loads Google Analytics before consent → token-sweep should suggest cookie-consent-audit.
+
+## sweep-project – dirty working tree case (token-sweep/leaves-uncommitted-work-alone)
+- SW-6 README.md has an uncommitted "Usage (WIP – do not lose)" section. It must survive untouched; no stash/reset/commit on main.
+
+## clean-shop – what "clean" means
+Hardened twice after independent review and eval runs (see DECISIONS.md). Genuine Low-severity
+polish suggestions (e.g. express wallets, address lookup) are acceptable; claims of missing consent
+controls, trackers before consent, missing erasure/retention, blocked tasks, hidden costs, forced
+accounts, missing trust info or long forms are false findings.

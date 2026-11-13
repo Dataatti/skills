@@ -8,7 +8,7 @@ metadata:
 
 # cookie-consent-audit
 
-Load the site as a brand-new visitor, inventory everything it stores and sends before any interaction, then test the banner. Every failure cites the rule it breaks. Report only; change code only if the user asks afterwards.
+Load the site as a brand-new visitor, inventory everything it stores and sends before any interaction, then test the banner. Every failure cites the rule it breaks. Report only; change code only if the user asks afterwards, and never push or deploy.
 
 > Not legal advice. This is a technical check against published law and regulator guidance; a lawyer should confirm conclusions for your situation.
 
@@ -44,11 +44,11 @@ The first line after the title is the score with exact counts ("Passed 18 of 22 
 Passed X of Y checks · How tested: <scan.cjs | browser tool | code-only> · Scope: EU + US
 Not legal advice.
 
-Before consent: 2 cookies (_ga, _fbp), 1 localStorage item, 3 third-party requests (googletagmanager.com, connect.facebook.net, static.hotjar.com)
+Before consent: 1 cookie (_uetsid), 0 storage items, 2 third-party requests (bat.bing.com, snap.licdn.com)
 
 | # | Failed check | Severity | Evidence | Fix | Rule (source) |
 |---|---|---|---|---|---|
-| 1 | CC-01 Trackers before consent | Critical | _ga set and GA4 loaded on first load | Load tags only after opt-in (gate in CMP / consent mode) | ePrivacy Art. 5(3); EDPB 2/2023 |
+| 1 | CC-01 Trackers before consent | Critical | Microsoft UET and LinkedIn Insight load on first page view | Load tags only after opt-in (gate in CMP / consent mode) | ePrivacy Art. 5(3); EDPB 2/2023 |
 ...
 ```
 

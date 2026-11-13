@@ -8,7 +8,7 @@ metadata:
 
 # gdpr-data-retention
 
-Find every place personal data lives, then check that each has a reason to exist, a time limit, and a way to be deleted. Report only; change code only if the user asks afterwards.
+Find every place personal data lives, then check that each has a reason to exist, a time limit, and a way to be deleted. Report only; change code only if the user asks afterwards, and never push or deploy.
 
 > Not legal advice. This is a technical review against the GDPR text and regulator guidance; confirm retention periods and lawful bases with a lawyer.
 
@@ -45,8 +45,8 @@ Not legal advice.
 
 | Data (where) | Current period | Recommended | Fix | Why (source) |
 |---|---|---|---|---|
-| users (soft-deleted rows) | Forever | Purge within 30 days of deletion request | Hard-delete job + Mailchimp delete | Art. 17(1); Art. 5(1)(e) |
-| orders / invoices | Forever | 6 yrs after FY end (vouchers), then delete | Retention job; unlink on erasure | Accounting Act 2:10; Art. 17(3)(b) |
+| job_applicants (rejected) | Forever | 2 years after the decision, with notice | Nightly purge job + delete CV files in storage | Art. 5(1)(e); CNIL recruitment référentiel |
+| payroll exports (S3) | Forever | Statutory minimum for the country, then delete | Lifecycle rule; restrict access meanwhile | legal-minimums.md; Art. 17(3)(b) |
 ...
 
 Other failures

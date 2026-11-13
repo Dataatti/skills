@@ -13,7 +13,7 @@ Represents mobile-first users and anyone on constrained networks or devices (Cor
 ## Behaviours and constraints the agent must simulate
 - **Viewport**: 375x667 CSS px (iPhone SE/8 class), `isMobile: true`, `hasTouch: true`, deviceScaleFactor 2; also rotate to 667x375 to check orientation (WCAG 1.3.4). Playwright emulation: https://playwright.dev/docs/emulation
 - **Touch only**: use tap (`locator.tap()` / touchscreen: https://playwright.dev/docs/api/class-touchscreen); no hover, no keyboard shortcuts, no right-click. Hover-only content is a finding.
-- **Measure target sizes**: bounding box of every tappable element; flag under 24x24 CSS px (WCAG 2.5.8 AA) and note under 44x44 pt (Apple) / 48x48 dp (Material) as usability findings (sources in `../patterns.md`).
+- **Measure target sizes**: bounding box of every tappable element; flag under 24x24 CSS px (WCAG 2.5.8 AA) unless an exception applies – e.g. a 24 px circle centred on the target doesn't overlap another target, or the target is an inline link in a sentence and note under 44x44 pt (Apple) / 48x48 dp (Material) as usability findings (sources in `../patterns.md`).
 - **Network throttling** via CDP `Network.emulateNetworkConditions` (throughput in bytes/s, latency in ms: https://chromedevtools.github.io/devtools-protocol/tot/Network/#method-emulateNetworkConditions). Use Chrome DevTools preset values, as defined in DevTools source `front_end/core/sdk/NetworkManager.ts` (https://github.com/ChromeDevTools/devtools-frontend/blob/main/front_end/core/sdk/NetworkManager.ts):
 
 | DevTools preset (Chrome 127+) | Former name | Download | Upload | Latency | CDP values |

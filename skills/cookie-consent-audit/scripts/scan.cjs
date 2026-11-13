@@ -46,6 +46,8 @@ const block = args.includes("--block-third-party");
 const clickText = opt("--click");
 const wait = Number(opt("--wait") || 3000);
 
+// Approximates the registrable domain as the last two labels. Multi-part public suffixes
+// (e.g. co.uk) are therefore over-grouped; check those hosts by hand.
 function site(host) {
   const parts = host.replace(/^\[|\]$/g, "").split(".");
   return /^\d+$/.test(parts[parts.length - 1]) || parts.length < 2 ? host : parts.slice(-2).join(".");
@@ -74,7 +76,10 @@ function site(host) {
   async function snapshot(p) {
     const cookies = (await context.cookies()).map((c) => ({ name: c.name, domain: c.domain,
       expiresDays: c.expires > 0 ? Math.round((c.expires * 1000 - Date.now()) / 864e5) : "session" }));
-    const storage = await page.evaluate(() => ({ localStorage: Object.keys(localStorage), sessionStorage: Object.keys(sessionStorage) })).catch(() => ({}));
+    const storage = await page.evaluate(async () => ({
+      localStorage: Object.keys(localStorage), sessionStorage: Object.keys(sessionStorage),
+      indexedDB: indexedDB.databases ? (await indexedDB.databases()).map((d) => d.name) : [],
+    })).catch(() => ({}));
     const dedup = [...new Map(requests[p].map((r) => [r.url, r])).values()];
     return { cookies, ...storage, thirdPartyRequests: dedup };
   }

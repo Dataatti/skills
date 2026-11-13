@@ -33,25 +33,53 @@
     hideBanner();
   }
 
+  var GA_ID = "G-KETTLE01";
+  function deleteAnalyticsCookies() {
+    document.cookie.split("; ").forEach(function (c) {
+      var name = c.split("=")[0];
+      if (name === "_ga" || name.indexOf("_ga_") === 0) {
+        [location.hostname, "." + location.hostname, ""].forEach(function (d) {
+          document.cookie = name + "=; Max-Age=0; Path=/" + (d ? "; Domain=" + d : "");
+        });
+      }
+    });
+  }
   function applyConsent(choices) {
-    if (choices.analytics && !window.__kcAnalyticsLoaded) {
+    window["ga-disable-" + GA_ID] = !choices.analytics;
+    if (!choices.analytics) { deleteAnalyticsCookies(); return; }
+    if (!window.__kcAnalyticsLoaded) {
       window.__kcAnalyticsLoaded = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag("js", new Date());
+      gtag("config", GA_ID, { cookie_expires: 60 * 60 * 24 * 60 }); // _ga cookies expire after 2 months
       var s = document.createElement("script");
-      s.src = "https://www.googletagmanager.com/gtag/js?id=G-KETTLE01";
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
       s.async = true;
       document.head.appendChild(s);
     }
     // marketing: no marketing tags are used today; category kept for future use.
   }
 
-  function showBanner(focus) {
+  var returnFocusTo = null;
+  function showBanner(trigger) {
+    var existing = readConsent();
+    if (existing) {
+      document.getElementById("c-analytics").checked = !!existing.choices.analytics;
+      document.getElementById("c-marketing").checked = !!existing.choices.marketing;
+    }
     document.getElementById("consent-banner").hidden = false; document.body.classList.add("banner-open");
-    if (focus) document.getElementById("consent-title").focus();
+    if (trigger) { returnFocusTo = trigger; document.getElementById("consent-title").focus(); }
   }
-  function hideBanner() { document.getElementById("consent-banner").hidden = true; document.body.classList.remove("banner-open"); }
+  function hideBanner() {
+    document.getElementById("consent-banner").hidden = true; document.body.classList.remove("banner-open");
+    if (returnFocusTo) { returnFocusTo.focus(); returnFocusTo = null; }
+  }
 
   function boot() {
     var gpc = navigator.globalPrivacyControl === true;
+    var gpcStatus = document.getElementById("gpc-status");
+    if (gpc && gpcStatus) gpcStatus.hidden = false;
     var existing = readConsent();
     if (existing) {
       if (gpc) { existing.choices.marketing = false; existing.choices.analytics = false; }
@@ -70,6 +98,8 @@
     });
     document.getElementById("consent-customise").addEventListener("click", function () {
       document.getElementById("consent-prefs").hidden = false;
+      this.setAttribute("aria-expanded", "true");
+      document.getElementById("c-analytics").focus();
     });
     document.getElementById("consent-save").addEventListener("click", function () {
       saveConsent({
@@ -79,7 +109,7 @@
       }, "custom");
     });
     var link = document.getElementById("cookie-settings-link");
-    if (link) link.addEventListener("click", function (e) { e.preventDefault(); showBanner(true); });
+    if (link) link.addEventListener("click", function (e) { e.preventDefault(); showBanner(link); });
   }
   document.addEventListener("DOMContentLoaded", boot);
 })();

@@ -10,8 +10,8 @@ Source: Nielsen, "Severity Ratings for Usability Problems": https://www.nngroup.
 |---|---|---|
 | 0 | Not a usability problem | Drop it; do not report |
 | 1 | Cosmetic only | Visual polish, no effect on task completion or speed |
-| 2 | Minor, low priority | Slows or annoys, persona recovers quickly unaided |
-| 3 | Major, high priority | Persona recovers only with significant effort, errors, or by guessing; or a WCAG A/AA failure on a non-core path |
+| 2 | Minor, low priority | Slows or annoys, persona recovers quickly unaided; or a WCAG A/AA failure that doesn't hinder any task |
+| 3 | Major, high priority | Persona recovers only with significant effort, errors, or by guessing; or a WCAG A/AA failure that makes a core task markedly harder |
 | 4 | Catastrophe, fix before release | Persona cannot complete a core task (blocked, trapped, data lost); or a WCAG A/AA failure that blocks a core task |
 
 ## 2. The factors behind the number
@@ -22,7 +22,7 @@ Nielsen: severity is a combination of (same source as above):
 - **Persistence**: one-time problem users learn to avoid, or does it keep bothering them? (agent proxy: does it recur on every visit or every item)
 - **Market impact**: effect on the product's popularity even if easy to overcome (agent: note only, do not guess commercial impact)
 
-Write the evidence for each factor in the finding; the number alone is not enough.
+Weigh each factor when choosing the number (keep the evidence in your working notes; the report itself stays one line per cell).
 
 Nielsen recommends that severity be judged by several evaluators and averaged, because a single rater is unreliable (same source). An agent is one rater: say so, and mark borderline ratings as "2-3" with reasons rather than inventing precision.
 

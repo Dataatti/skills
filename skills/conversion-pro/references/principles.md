@@ -85,7 +85,7 @@ Sources: https://baymard.com/research-articles/perceived-security-of-payment-for
 
 **How it leaks.** Slow LCP on product pages, janky INP on "Add to cart", layout shift (CLS) that moves the CTA, heavy third-party scripts on checkout.
 
-Sources: https://www.deloitte.com/ie/en/services/consulting/research/milliseconds-make-millions.html · https://www2.deloitte.com/content/dam/Deloitte/ie/Documents/Consulting/Milliseconds_Make_Millions_report.pdf · https://web.dev/case-studies/milliseconds-make-millions · https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/page-load-time-statistics/ (original URL, now redirects to business.google.com, so cite the figure as Google/SOASTA 2017) · https://web.dev/articles/vitals
+Sources: https://www.deloitte.com/ie/en/services/consulting/research/milliseconds-make-millions.html · https://web.dev/case-studies/milliseconds-make-millions · https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/page-load-time-statistics/ (original URL, now redirects to business.google.com, so cite the figure as Google/SOASTA 2017) · https://web.dev/articles/vitals
 
 ---
 

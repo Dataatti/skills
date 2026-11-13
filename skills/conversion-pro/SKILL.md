@@ -8,7 +8,7 @@ metadata:
 
 # conversion-pro
 
-Find where the main flows lose people, and back every finding with established research. Report only; change code only if the user asks afterwards.
+Find where the main flows lose people, and back every finding with established research. Report only; change code only if the user asks afterwards, and never push or deploy.
 
 ## 1. Identify the main flows
 
@@ -16,18 +16,18 @@ From the site (or code: routes, nav, CTAs, forms, payment integration), list the
 
 ## 2. Pick how to browse
 
-Use whatever browser tool exists (Playwright MCP, Claude in Chrome, built-in browser, or a Playwright script via Bash). For a local project, serve it first (e.g. `python3 -m http.server`). If no browser is possible, review the code instead and say so in the report ("Code-only review: speed, layout and mobile were inferred, not observed"). If Playwright fails to launch because the temp dir is read-only or no browser is found (common in sandboxes), retry with `TMPDIR` set to a writable folder inside the working directory and `PLAYWRIGHT_BROWSERS_PATH` pointing at the installed browsers (e.g. the real user's `~/.cache/ms-playwright`). Fall back to code-only only after that fails.
+Use whatever browser tool exists (Playwright MCP, Claude in Chrome, built-in browser). For Playwright scripts, load it through `scripts/pw.cjs` in this skill's folder (`const { launch } = require("<skill-dir>/scripts/pw.cjs")`; check with `node <skill-dir>/scripts/pw.cjs --check`); it fixes read-only temp dirs and hidden browser installs in sandboxes. For a local project, serve it first (e.g. `python3 -m http.server`) and give reviewers the URL. If no browser is possible, review the code instead and say so in the report ("Code-only review: speed, layout and mobile were inferred, not observed").
 
 ## 3. Run five independent reviewers
 
 Run **five reviewers with no shared context**. Independence is the point: agreement between agents that did not see each other's notes is the confidence signal, so never pass one reviewer's findings to another.
 
-- **With subagents** (Agent/Task tool): spawn five in one turn. Give each the same brief only: the URL or path, the flows from step 1, the path to `references/properties.md`, and the instruction below. Nothing else.
+- **With subagents** (Agent/Task tool): spawn five in one turn. Give each the same brief only: the URL or path, the flows from step 1, the path to `references/properties.md`, the path to `scripts/pw.cjs`, and the instruction below. Nothing else.
 - **Without subagents but with `claude` CLI**: run five separate `claude -p` processes with the same brief.
 - **Neither**: do five separate passes yourself, each starting from the flow list only, and mark the report "Reviewers not independent (single agent)".
 
 Reviewer brief:
-> Walk these flows as a first-time visitor who wants to complete them. Check every property in references/properties.md that applies. Report findings only – no fixes to code. For each: flow step, what you observed (concrete: element text, field count, price shown), property ID (CV-xx), severity (high/medium/low). Also list properties you checked that passed. Under 40 lines.
+> Walk these flows as a first-time visitor who wants to complete them. Check every property in references/properties.md that applies. Report findings only – no fixes to code. For each: flow step, what you observed (concrete: element text, field count, price shown), property ID (CV-xx), severity (Critical/High/Medium/Low, per the scale in properties.md). Also list properties you checked that passed. Under 40 lines.
 
 ## 4. Merge and rank
 
@@ -52,7 +52,7 @@ How tested: <browser tool | code-only> · 5 independent reviewers
 
 | # | Issue (step) | Severity | Agents | Fix | Why (principle, source) |
 |---|---|---|---|---|---|
-| 1 | Shipping €9.90 + fee €2.50 first shown at payment | High | 5/5 | Show total incl. shipping on product page and cart | CV-05 Cost transparency – Baymard: extra costs top abandonment reason (40%) |
+| 1 | Trial signup asks for a card before showing what's included | High | 5/5 | Show plan contents first; make the card optional for the trial | CV-01 / CV-03 – Fogg B=MAP (ability); Baymard: long or complicated forms (17%) |
 ...
 Low confidence (1 agent): #7, #8
 ```

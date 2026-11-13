@@ -24,7 +24,7 @@ Context: in WebAIM's Screen Reader User Survey #10 (Dec 2023-Jan 2024), 71.6% of
 
 ## Mode B: low vision - what the agent must simulate
 - **200% zoom**: set browser zoom / `deviceScaleFactor`, or emulate a 640 px wide viewport from 1280 px. Check text is not clipped, overlapped or truncated and all functions remain (WCAG 1.4.4: https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html).
-- **320 px reflow check**: viewport 320 CSS px wide (equivalent to 1280 px at 400% zoom). Content must read in one direction without horizontal scrolling, except content that needs 2D layout such as data tables and maps (WCAG 1.4.10: https://www.w3.org/WAI/WCAG22/Understanding/reflow.html). Check `document.documentElement.scrollWidth <= 320`.
+- **320 px reflow check**: viewport 320 CSS px wide (equivalent to 1280 px at 400% zoom). Content must read in one direction without horizontal scrolling, except content that needs 2D layout such as data tables and maps (WCAG 1.4.10: https://www.w3.org/WAI/WCAG22/Understanding/reflow.html). Check `document.documentElement.scrollWidth <= 320`; if it is wider, find the element causing it and don't flag it when it is a data table or other 2D content that is scrollable on its own.
 - **Contrast**: compute contrast for text (4.5:1, 3:1 large) and for input borders, icons and focus indicators (3:1) (1.4.3, 1.4.11).
 - **Text spacing**: inject the 1.4.12 spacing CSS and look for clipped text: https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html
 - At zoom, check that sticky headers/footers do not cover most of the viewport or hide focused elements (2.4.11).
