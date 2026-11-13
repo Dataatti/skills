@@ -1,0 +1,50 @@
+[
+  {
+    "query": "our shop gets lots of visitors but hardly anyone buys \u2013 can you find where we lose them? https://shop.example.com",
+    "should_trigger": true
+  },
+  {
+    "query": "do a CRO audit of our checkout, cart abandonment is 80%",
+    "should_trigger": true
+  },
+  {
+    "query": "why aren't people signing up for the free trial from our pricing page? site is in ./site, npm start",
+    "should_trigger": true
+  },
+  {
+    "query": "review our lead form and landing page for conversion leaks before we spend on google ads",
+    "should_trigger": true
+  },
+  {
+    "query": "find friction in our browse \u2192 product \u2192 checkout flow and rank the fixes",
+    "should_trigger": true
+  },
+  {
+    "query": "how can I get more sales from this website? it's a woocommerce store running locally",
+    "should_trigger": true
+  },
+  {
+    "query": "set up GA4 conversion tracking for our purchase event",
+    "should_trigger": false
+  },
+  {
+    "query": "write ad copy for our summer sale on Meta",
+    "should_trigger": false
+  },
+  {
+    "query": "A/B test significance calculator: is 120/2400 vs 150/2450 significant?",
+    "should_trigger": false
+  },
+  {
+    "query": "test our app with a keyboard-only user and screen reader user",
+    "should_trigger": false
+  },
+  {
+    "query": "add a countdown timer to the product page to create urgency",
+    "should_trigger": false
+  },
+  {
+    "query": "optimise our SQL query for the product listing, it takes 3 seconds",
+    "should_trigger": false
+  }
+]

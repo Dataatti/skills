@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: flags-planted-retention-issues
+expected_outcome: |
+  A score, a short retention table and failures: soft-delete is not erasure (plus
+  Mailchimp/logs/backups not covered), login_events kept forever, request bodies with
+  personal data logged and logs/backups with no lifecycle, unnecessary fields (DOB, two
+  phones, company), newsletter/cart-recovery subscriptions without consent, no records of
+  processing / no periods in privacy notice. Orders/invoices kept for the Finnish
+  bookkeeping minimum rather than deleted.
+context:
+  scaffold_script: place-files.sh

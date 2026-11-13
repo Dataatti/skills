@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: no-false-findings-on-clean-site
+expected_outcome: |
+  Total cost is shown up front, guest checkout, short form, trust info present. No high-
+  severity high-confidence findings; no dark-pattern recommendations.
+context:
+  scaffold_script: place-files.sh

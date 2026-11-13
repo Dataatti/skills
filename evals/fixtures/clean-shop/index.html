@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop – Kettle &amp; Co</title>
+<link rel="stylesheet" href="styles.css">
+<script src="consent.js" defer></script>
+<script src="shop.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div id="consent-banner" role="region" aria-labelledby="consent-title" hidden>
+  <h2 id="consent-title" tabindex="-1">Cookies on Kettle &amp; Co</h2>
+  <p>We use necessary cookies to run the shop (your cart and this choice). With your permission we also use analytics cookies (Google Analytics) to see which pages are used. We do not use marketing cookies today. <a href="privacy.html#cookies">Read more</a></p>
+  <div class="actions">
+    <button id="consent-accept" class="primary">Accept all</button>
+    <button id="consent-reject" class="primary">Reject all</button>
+    <button id="consent-customise" class="secondary">Choose cookies</button>
+  </div>
+  <div id="consent-prefs" hidden>
+    <fieldset>
+      <legend>Cookie categories</legend>
+      <p><input type="checkbox" id="c-necessary" checked disabled> <label for="c-necessary" class="inline">Necessary – always on (cart, consent choice)</label></p>
+      <p><input type="checkbox" id="c-analytics"> <label for="c-analytics" class="inline">Analytics – Google Analytics, page usage statistics</label></p>
+      <p><input type="checkbox" id="c-marketing"> <label for="c-marketing" class="inline">Marketing – not used today</label></p>
+    </fieldset>
+    <button id="consent-save" class="secondary">Save my choices</button>
+  </div>
+</div>
+<header>
+  <a href="index.html"><strong>Kettle &amp; Co</strong> – loose-leaf tea</a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="index.html">Shop</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="help.html">Help &amp; contact</a></li>
+    </ul>
+  </nav>
+  <p>Free returns within 30 days · Shipping €4.90 in Finland, free over €40</p>
+  
+</header>
+<main id="main">
+<h1>Loose-leaf tea, packed in Turku</h1>
+<p>Organic teas, packed by hand. Order by 14:00 and it ships the same day.</p>
+<ul class="products">
+  <li><a href="product.html"><img src="img/sencha.svg" alt="Green sencha leaves in a white bowl" width="200" height="140"></a>
+    <h2><a href="product.html">Sencha Morning</a></h2><p class="price">€12.50 / 100 g</p>
+    <p><span aria-hidden="true">★★★★☆</span> 4.6 out of 5 (128 reviews)</p></li>
+  <li><a href="product-earl.html"><img src="img/earl.svg" alt="Black tea leaves with blue cornflower petals" width="200" height="140"></a>
+    <h2><a href="product-earl.html">Earl Grey Blue</a></h2><p class="price">€10.90 / 100 g</p>
+    <p><span aria-hidden="true">★★★★☆</span> 4.8 out of 5 (342 reviews)</p></li>
+</ul>
+</main>
+<footer class="trust">
+  <p>Secure payment by card, MobilePay or invoice. Questions? <a href="help.html">Contact us</a> – we reply within one working day. Phone +358 2 555 0100.</p>
+  <p><a href="privacy.html">Privacy notice</a> · <a href="#" id="cookie-settings-link">Cookie settings</a> · <a href="returns.html">Returns policy</a></p>
+  <p>Kettle &amp; Co Oy, Business ID 1234567-8, Turku, Finland</p>
+</footer>
+</body>
+</html>

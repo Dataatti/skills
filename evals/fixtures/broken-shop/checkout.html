@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Brew Barn</title>
+<link rel="stylesheet" href="styles.css">
+<script src="tracking.js"></script>
+<script src="cookies.js"></script>
+</head>
+<body>
+<header>
+  <a href="index.html"><img src="img/logo.svg" width="120" height="30"></a>
+  <span class="menu-icon" onclick="document.getElementById('nav').hidden=!document.getElementById('nav').hidden"></span>
+  <nav id="nav" hidden><a href="index.html">Shop</a> | <a href="cart.html">Cart</a></nav>
+  <a class="icon-link" href="cart.html"><img src="img/cart.svg" width="16" height="16"></a>
+</header>
+<main>
+<h1>Checkout</h1>
+<p>Have a coupon code? <input id="coupon" placeholder="Coupon code"> <span class="btn">Apply</span></p>
+<form id="f" action="payment.html">
+  <input id="email" placeholder="Email">
+  <input id="email2" placeholder="Confirm email">
+  <input id="first" placeholder="First name">
+  <input id="last" placeholder="Last name">
+  <input id="company" placeholder="Company">
+  <input id="phone" placeholder="Phone">
+  <input id="phone2" placeholder="Mobile phone">
+  <input id="dob" placeholder="Date of birth">
+  <input id="street" placeholder="Street">
+  <input id="zip" placeholder="Postcode">
+  <input id="city" placeholder="City">
+  <input id="country" placeholder="Country">
+  <input id="bstreet" placeholder="Billing street">
+  <input id="bzip" placeholder="Billing postcode">
+  <input id="bcity" placeholder="Billing city">
+  <select id="hear"><option>How did you hear about us?</option><option>Instagram</option><option>Friend</option></select>
+  <div class="btn" id="continue" onclick="go()">Continue</div>
+</form>
+<script>
+function go(){
+  var bad=false;
+  ['email','first','last','phone','dob','street','zip','city'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el.value){el.classList.add('invalid');bad=true}else el.classList.remove('invalid');
+  });
+  if(!bad) document.getElementById('f').submit();
+}
+</script>
+</main>
+<footer>
+  <p class="fineprint">© Brew Barn. <a href="privacy.html" class="fineprint">Privacy</a></p>
+</footer>
+<div id="cookie-bar">
+  <p>We use cookies to give you the best experience. By continuing to browse you agree to our use of cookies.</p>
+  <button id="cookie-accept" class="btn">Accept all</button>
+  <button id="cookie-more" class="btn-ghost">Settings</button>
+  <div id="cookie-settings">
+    <p><input type="checkbox" checked disabled> Necessary</p>
+    <p><input type="checkbox" id="c-analytics" checked> Analytics</p>
+    <p><input type="checkbox" id="c-marketing" checked> Marketing &amp; personalised ads</p>
+    <button id="cookie-save" class="btn">Save</button>
+    <button id="cookie-reject" class="btn-ghost" onclick="document.getElementById('cookie-bar').style.display='none'">Reject all</button>
+  </div>
+</div>
+</body>
+</html>

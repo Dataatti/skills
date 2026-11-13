@@ -1,0 +1,30 @@
+[
+  {
+    "name": "flags-planted-retention-issues",
+    "fixture": "broken-shop",
+    "prompt": "We're a small Finnish web shop. Can you review how our app stores personal data and how long we keep it? I want to know what we must fix for GDPR. Code is in this folder.",
+    "assertions": [
+      "The report opens with a score line in the form 'Passed X of Y checks' (or equivalent with two numbers).",
+      "The report contains a table with, for each data item, the current retention period, a recommended period and a fix.",
+      "The report flags that account deletion only sets deleted_at (soft delete) and that this is not erasure under GDPR Art. 17, and that data at Mailchimp (and/or logs/backups) is not deleted on request.",
+      "The report flags login_events (IP address and user agent) as kept indefinitely with no retention job.",
+      "The report flags that the logger writes full request bodies (emails, passwords or date of birth) and/or that the S3 log or backup buckets have no expiry lifecycle rule.",
+      "The report flags data minimisation (GDPR Art. 5(1)(c)) for collecting date of birth and/or duplicate phone numbers, company, or 'how did you hear' without a purpose.",
+      "The report flags that users are subscribed to newsletter or cart-recovery emails (abandoned_carts) without consent / without a valid lawful basis.",
+      "The report flags the missing records of processing (Art. 30) and/or the privacy notice not stating retention periods (Art. 13(2)(a)).",
+      "The report does NOT recommend deleting orders or invoices before the bookkeeping retention minimum; it recommends keeping them for the Finnish Accounting Act period (6 or 10 years) or explicitly notes the legal-obligation exception (Art. 17(3)(b)).",
+      "The report includes a statement that it is not legal advice."
+    ]
+  },
+  {
+    "name": "no-false-findings-on-clean-app",
+    "fixture": "clean-shop",
+    "prompt": "Our shop is in this folder (front end plus server code). Could you check our GDPR data retention and deletion setup? We think it's in good shape but want a second opinion.",
+    "assertions": [
+      "The report does not list any failure rated critical or high severity.",
+      "The report does not claim there is no erasure path or no automatic deletion (DELETE /api/me and jobs/retention.js exist).",
+      "The report does not recommend shortening order/invoice retention below the Finnish bookkeeping minimum.",
+      "The report opens with a score line in the form 'Passed X of Y checks' and includes a not-legal-advice note."
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "site-audit-skills",
+  "version": "1.0.0",
+  "description": "Five agent skills for auditing web apps: cookie consent, GDPR data retention, agent-run usability testing, conversion leaks, and a spare-token project sweep.",
+  "license": "MIT",
+  "repository": "https://github.com/dataatti/skills"
+}

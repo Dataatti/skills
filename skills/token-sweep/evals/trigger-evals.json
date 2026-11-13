@@ -1,0 +1,50 @@
+[
+  {
+    "query": "I have a bunch of tokens left before my limit resets tonight, can you find useful stuff to do in this repo?",
+    "should_trigger": true
+  },
+  {
+    "query": "friday evening, still have quota \u2013 sweep the project and fix what's safe, don't push anything",
+    "should_trigger": true
+  },
+  {
+    "query": "what could you work on while I'm away for the weekend? give me a ranked list and do the small things on a branch",
+    "should_trigger": true
+  },
+  {
+    "query": "end of week cleanup: look for bugs, outdated deps, missing tests and docs gaps in this codebase",
+    "should_trigger": true
+  },
+  {
+    "query": "use my remaining credits to run whatever audits make sense for this project and summarise",
+    "should_trigger": true
+  },
+  {
+    "query": "I've got ~40% of my weekly limit left, make the most of it on this repo",
+    "should_trigger": true
+  },
+  {
+    "query": "how many tokens does this prompt use?",
+    "should_trigger": false
+  },
+  {
+    "query": "upgrade react from 17 to 18 in this project",
+    "should_trigger": false
+  },
+  {
+    "query": "fix the failing test in tests/test_api.py",
+    "should_trigger": false
+  },
+  {
+    "query": "audit the cookie banner on our site for GDPR",
+    "should_trigger": false
+  },
+  {
+    "query": "write a README for this project",
+    "should_trigger": false
+  },
+  {
+    "query": "check my Claude usage limits and when they reset",
+    "should_trigger": false
+  }
+]

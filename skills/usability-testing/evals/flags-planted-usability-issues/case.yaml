@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: flags-planted-usability-issues
+expected_outcome: |
+  Persona-based test (power, keyboard-only, low-confidence, screen-reader/low-vision, mobile
+  slow) finding the planted issues, merged and ranked by severity and personas affected,
+  each citing WCAG or a heuristic.
+context:
+  scaffold_script: place-files.sh

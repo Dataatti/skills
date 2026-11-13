@@ -1,0 +1,50 @@
+[
+  {
+    "query": "we launch our shopify store in germany next week, can you check if the cookie banner is actually gdpr compliant? url is https://shop.example.de",
+    "should_trigger": true
+  },
+  {
+    "query": "Does our site drop Google Analytics cookies before people click accept? It's running on localhost:3000",
+    "should_trigger": true
+  },
+  {
+    "query": "Our legal team asked whether we honour Global Privacy Control for California visitors. Can you test www.example.com?",
+    "should_trigger": true
+  },
+  {
+    "query": "review the consent setup on our marketing site \u2013 we use Cookiebot + GTM and I'm not sure the reject button works",
+    "should_trigger": true
+  },
+  {
+    "query": "is the 'Do Not Sell or Share' link on our footer enough, and are our Meta pixel and TikTok pixel firing before opt-out? site is in ./web",
+    "should_trigger": true
+  },
+  {
+    "query": "before our CNIL inspection, audit the trackers and banner on https://exemple.fr please",
+    "should_trigger": true
+  },
+  {
+    "query": "how do I set a cookie with SameSite=None in Express so my auth works across subdomains?",
+    "should_trigger": false
+  },
+  {
+    "query": "write a privacy policy for my newsletter app, we only store emails",
+    "should_trigger": false
+  },
+  {
+    "query": "my session cookie disappears after login in Next.js middleware, help me debug",
+    "should_trigger": false
+  },
+  {
+    "query": "how long should we keep customer order data under GDPR? we're a Finnish shop",
+    "should_trigger": false
+  },
+  {
+    "query": "add a cookie banner component to our React app using our design system tokens",
+    "should_trigger": false
+  },
+  {
+    "query": "explain the difference between localStorage and sessionStorage for caching API responses",
+    "should_trigger": false
+  }
+]

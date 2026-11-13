@@ -1,0 +1,33 @@
+:root { --text:#1a1a1a; --bg:#ffffff; --brand:#0b5d3b; --muted:#4a4a4a; --focus:#1d4ed8; --error:#b00020; }
+* { box-sizing: border-box; }
+body { margin:0; font: 1.0625rem/1.5 system-ui, sans-serif; color:var(--text); background:var(--bg); }
+.skip-link { position:absolute; left:-9999px; top:0; background:#fff; padding:.5rem 1rem; }
+.skip-link:focus { left:1rem; z-index:100; }
+header, main, footer { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+nav ul { list-style:none; display:flex; gap:1.5rem; padding:0; flex-wrap:wrap; }
+a { color: var(--brand); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button, .button { display:inline-block; min-height:44px; min-width:44px; padding:.65rem 1.25rem; font:inherit; border-radius:6px; border:2px solid var(--brand); cursor:pointer; text-decoration:none; }
+.primary { background:var(--brand); color:#fff; }
+.secondary { background:#fff; color:var(--brand); }
+label { display:block; font-weight:600; margin-top:1rem; }
+.hint { color:var(--muted); font-size:.95rem; display:block; }
+input, select { font:inherit; padding:.6rem; width:100%; max-width:28rem; border:2px solid #555; border-radius:4px; }
+.error-msg { color:var(--error); font-weight:600; }
+.error-msg::before { content:"Error: "; }
+.products { display:grid; grid-template-columns:repeat(auto-fill,minmax(14rem,1fr)); gap:1.5rem; padding:0; list-style:none; }
+.price { font-size:1.25rem; font-weight:700; }
+.trust { border-top:1px solid #ccc; margin-top:2rem; padding-top:1rem; }
+table { border-collapse:collapse; } td, th { padding:.4rem .8rem; text-align:left; }
+#consent-banner { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:3px solid var(--brand); padding:1rem; box-shadow:0 -2px 8px rgba(0,0,0,.2); }
+#consent-banner .actions { display:flex; gap:1rem; flex-wrap:wrap; }
+#consent-banner[hidden], #consent-prefs[hidden] { display:none; }
+fieldset { border:1px solid #888; margin-top:1rem; }
+@media (max-width: 30rem) { nav ul { gap:1rem; } }
+label.inline { display:inline; font-weight:400; }
+.visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+fieldset.secure { border:2px solid var(--brand); border-radius:6px; background:#f4faf6; }
+fieldset[hidden] { display:none; }
+.reviews { padding-left:1rem; }
+body.banner-open { padding-bottom: 16rem; }
+html { scroll-padding-bottom: 16rem; }

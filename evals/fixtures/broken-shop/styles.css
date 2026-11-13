@@ -1,0 +1,14 @@
+body { margin:0; font: 14px/1.4 Helvetica, Arial, sans-serif; color:#333; }
+*:focus { outline: none; }
+header, main, footer { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+.menu-icon { width:16px; height:16px; display:inline-block; background:#333; cursor:pointer; }
+.muted { color:#aaa; }
+.fineprint { color:#bbb; font-size:11px; }
+.btn { display:inline-block; background:#e94e1b; color:#fff; padding:4px 8px; cursor:pointer; font-size:12px; }
+.btn-ghost { color:#ccc; font-size:11px; text-decoration:underline; cursor:pointer; background:none; border:0; }
+input, select { border:1px solid #ddd; padding:4px; margin:4px 0; width:20rem; display:block; }
+input.invalid { border-color:#e00; }
+.products { display:flex; gap:1rem; }
+.timer { background:#ffeb3b; padding:.5rem; font-weight:bold; }
+#cookie-bar { position:fixed; bottom:0; left:0; right:0; background:#222; color:#fff; padding:1rem; display:none; }
+#cookie-settings { display:none; background:#fff; color:#333; padding:1rem; }

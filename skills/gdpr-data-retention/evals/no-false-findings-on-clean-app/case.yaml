@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: no-false-findings-on-clean-app
+expected_outcome: |
+  Every personal data item has a purpose, basis, period, automatic deletion and erasure
+  path. The report gives a high score and no high-severity failures, and does not recommend
+  deleting orders before the bookkeeping minimum.
+context:
+  scaffold_script: place-files.sh

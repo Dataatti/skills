@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: no-false-findings-on-clean-site
+expected_outcome: |
+  All personas complete the purchase task; no blocker (severity 3–4) findings are reported.
+context:
+  scaffold_script: place-files.sh

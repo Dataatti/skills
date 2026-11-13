@@ -1,0 +1,28 @@
+[
+  {
+    "name": "flags-planted-conversion-leaks",
+    "fixture": "broken-shop",
+    "prompt": "Our tea shop gets traffic but almost nobody buys. Can you find out where we're losing people? Site is in this folder (serve with `python3 -m http.server 8000`).",
+    "assertions": [
+      "The report identifies the main purchase flow (home/product \u2192 cart \u2192 account/checkout \u2192 payment) before listing findings.",
+      "The report states it used five independent reviewers (or explains why it could not) and each finding shows how many reviewers found it (e.g. 4/5).",
+      "The report flags the unexpected shipping (\u20ac9.90) and/or service fee (\u20ac2.50) first shown at the payment step as a top issue, citing Baymard research on extra costs.",
+      "The report flags forced account creation before checkout (no guest checkout).",
+      "The report flags the checkout form as too long or asking for unnecessary fields (e.g. date of birth, confirm email, two phone numbers, company).",
+      "The report flags missing trust signals (no returns policy, contact details, reviews or payment security cues).",
+      "The report flags the countdown timer / 'only 2 left' as fake urgency or a dark pattern (a risk), and does not recommend adding fake urgency, scarcity, or hidden fees anywhere.",
+      "Every finding cites a principle or source (e.g. Baymard, Fogg, Cialdini, Hick's law, Core Web Vitals)."
+    ]
+  },
+  {
+    "name": "no-false-findings-on-clean-site",
+    "fixture": "clean-shop",
+    "prompt": "Here's our tea shop (in this folder, serve with `python3 -m http.server 8000`). Before we spend money on ads, can you check the buying flow for conversion problems?",
+    "assertions": [
+      "The report does not claim there are hidden or unexpected costs at checkout (shipping is shown on product, cart and checkout pages).",
+      "The report does not claim account creation is forced (guest checkout is available).",
+      "No finding is rated high severity and found by 4 or more of 5 reviewers.",
+      "The report does not recommend fake urgency, countdown timers, fake scarcity, pre-ticked add-ons or other dark patterns."
+    ]
+  }
+]

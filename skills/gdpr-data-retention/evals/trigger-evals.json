@@ -1,0 +1,50 @@
+[
+  {
+    "query": "can you review our Postgres schema and tell me how long we're allowed to keep user data under GDPR? migrations are in db/migrations",
+    "should_trigger": true
+  },
+  {
+    "query": "A customer asked us to delete their account. Does our DELETE /users endpoint actually erase everything? Check the code in src/",
+    "should_trigger": true
+  },
+  {
+    "query": "we need a data retention policy for our SaaS \u2013 go through the codebase and list what personal data we store and how long we keep it",
+    "should_trigger": true
+  },
+  {
+    "query": "is soft delete with deleted_at good enough for right to be forgotten? our Rails app is in this repo",
+    "should_trigger": true
+  },
+  {
+    "query": "our logs in Datadog contain emails and IPs, how long can we keep them and what should we change? also check the logger config",
+    "should_trigger": true
+  },
+  {
+    "query": "prepare a records of processing (article 30) table from what this Django app stores",
+    "should_trigger": true
+  },
+  {
+    "query": "write a SQL migration that adds a deleted_at column to the users table",
+    "should_trigger": false
+  },
+  {
+    "query": "is our cookie banner compliant? site is https://example.com",
+    "should_trigger": false
+  },
+  {
+    "query": "set up a nightly Postgres backup to S3 with pg_dump",
+    "should_trigger": false
+  },
+  {
+    "query": "encrypt the users.email column at rest with pgcrypto",
+    "should_trigger": false
+  },
+  {
+    "query": "draft a DPA template between us and our client",
+    "should_trigger": false
+  },
+  {
+    "query": "how do I export all rows from the orders table to CSV",
+    "should_trigger": false
+  }
+]

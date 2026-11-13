@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: flags-planted-consent-issues
+expected_outcome: |
+  A short report that starts with a pass score, then lists the planted failures: trackers
+  (GA4, Meta Pixel, Hotjar) and their cookies/storage before consent, no Reject on the first
+  layer, pre-ticked boxes, no way to withdraw consent, GPC ignored / no Do Not Sell or Share
+  link, consent not recorded. Each failure cites its rule.
+context:
+  scaffold_script: place-files.sh

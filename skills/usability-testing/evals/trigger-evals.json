@@ -1,0 +1,50 @@
+[
+  {
+    "query": "can you usability test our booking app like a real customer would? it's running on localhost:5173, main task is booking a table",
+    "should_trigger": true
+  },
+  {
+    "query": "I want to know if someone using only a keyboard or a screen reader can sign up on our site https://app.example.io",
+    "should_trigger": true
+  },
+  {
+    "query": "test the onboarding flow as a non-technical older user and as a power user and tell me what trips them up",
+    "should_trigger": true
+  },
+  {
+    "query": "do a UX review of our checkout on mobile with a slow connection \u2013 the site is in ./frontend, npm run dev starts it",
+    "should_trigger": true
+  },
+  {
+    "query": "before launch, run through our web app as different personas and give me the ranked usability problems",
+    "should_trigger": true
+  },
+  {
+    "query": "check our dashboard against WCAG 2.2 AA by actually using it",
+    "should_trigger": true
+  },
+  {
+    "query": "write a usability test plan and recruiting screener for 5 participants for our mobile app",
+    "should_trigger": false
+  },
+  {
+    "query": "summarise these interview notes from our user research sessions into themes",
+    "should_trigger": false
+  },
+  {
+    "query": "write Playwright e2e tests for the login page",
+    "should_trigger": false
+  },
+  {
+    "query": "why is conversion on our pricing page so low? ga shows lots of visits but few trials",
+    "should_trigger": false
+  },
+  {
+    "query": "make this button component accessible: add aria attributes and focus styles",
+    "should_trigger": false
+  },
+  {
+    "query": "design a persona document for our marketing team",
+    "should_trigger": false
+  }
+]

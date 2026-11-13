@@ -1,0 +1,30 @@
+[
+  {
+    "name": "flags-planted-consent-issues",
+    "fixture": "broken-shop",
+    "prompt": "We're launching our tea shop in the EU and the US next month. Can you check whether our cookie banner and tracking setup is compliant? The site is in this folder \u2013 you can serve it with `python3 -m http.server 8000`.",
+    "assertions": [
+      "The report opens with a score line in the form 'Passed X of Y checks' (or equivalent wording with two numbers) before listing failures.",
+      "The report states that Google Analytics / googletagmanager.com, the Meta (Facebook) Pixel and Hotjar (or their cookies _ga, _fbp, or the _hjSessionUser localStorage item) load or are set before the visitor gives consent, and cites ePrivacy Directive Art. 5(3) or equivalent regulator guidance.",
+      "The report flags that rejecting is harder than accepting: there is no 'Reject all' on the first layer of the banner (it is only inside Settings).",
+      "The report flags the pre-ticked analytics and marketing checkboxes as invalid consent (citing GDPR Recital 32, Planet49 / CJEU C-673/17, or EDPB consent guidelines).",
+      "The report flags that there is no way to withdraw or change consent later (citing GDPR Art. 7(3) or equivalent).",
+      "The report flags at least one US-specific failure: Global Privacy Control is not honoured, or there is no 'Do Not Sell or Share My Personal Information' link despite ad tracking.",
+      "The report flags that consent is not recorded in a way that can be demonstrated (no timestamp/version/choices; GDPR Art. 7(1)), or that 'continuing to browse' is treated as consent.",
+      "Every listed failure includes a fix and names a specific legal source or guideline (article, guideline, or regulator).",
+      "The report includes a statement that it is not legal advice."
+    ]
+  },
+  {
+    "name": "no-false-findings-on-clean-site",
+    "fixture": "clean-shop",
+    "prompt": "Quick sanity check before we go live: is the cookie consent on our shop OK for GDPR and for US visitors? Site files are in this folder (serve with `python3 -m http.server 8000`).",
+    "assertions": [
+      "The report states that no non-essential cookies, storage items or third-party tracking requests occur before consent (only necessary or none).",
+      "The report does not list any failure rated critical or high severity.",
+      "The report does not claim that Reject is missing from the first layer, that boxes are pre-ticked, or that there is no way to withdraw consent (all of which would be false for this site).",
+      "The report does not claim Global Privacy Control is ignored (the site honours it).",
+      "The report opens with a score line in the form 'Passed X of Y checks' and includes a not-legal-advice note."
+    ]
+  }
+]

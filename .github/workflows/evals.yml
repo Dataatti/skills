@@ -1,0 +1,98 @@
+name: skill-evals
+
+# Re-runs each changed skill's evals (planted-issue fixtures + clean control) with Claude Code
+# headless and fails the PR if a skill's pass rate drops below its recorded baseline.
+on:
+  pull_request:
+    paths:
+      - "skills/**"
+      - "evals/**"
+      - "scripts/**"
+      - ".github/workflows/evals.yml"
+  workflow_dispatch:
+    inputs:
+      skills:
+        description: "Comma-separated skill names, or 'all'"
+        default: "all"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evals-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/validate.py
+
+  select:
+    needs: validate
+    runs-on: ubuntu-latest
+    outputs:
+      skills: ${{ steps.pick.outputs.skills }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 scripts/changed-skills.py --only "${{ inputs.skills }}" >> "$GITHUB_OUTPUT"
+          else
+            python3 scripts/changed-skills.py "${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+          fi
+          cat "$GITHUB_OUTPUT"
+
+  eval:
+    needs: select
+    if: needs.select.outputs.skills != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        skill: ${{ fromJSON(needs.select.outputs.skills) }}
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      EVAL_MODEL: claude-sonnet-5-5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check API key
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set (forked PRs don't receive secrets)."; exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Claude Code, Playwright and the eval sandbox
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap socat
+          # Ubuntu 24.04 restricts unprivileged user namespaces, which bubblewrap needs.
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+          npm install -g @anthropic-ai/claude-code playwright
+          npx playwright install --with-deps chromium
+          claude --version
+
+      - name: Run evals
+        run: |
+          scripts/run-evals.sh "${{ matrix.skill }}" \
+            --runs 1 --ablation none --model "$EVAL_MODEL" \
+            --threshold 0 -j 2 --keep-temp --max-cost-usd 15
+
+      - name: Gate against baseline
+        run: python3 scripts/summarize-evals.py "${{ matrix.skill }}" --gate | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results-${{ matrix.skill }}
+          path: evals-results/${{ matrix.skill }}/
+          if-no-files-found: ignore

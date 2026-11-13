@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: sweeps-project-on-local-branch
+expected_outcome: |
+  Work happens on a new local branch, nothing is pushed. A ranked list with impact and
+  effort includes: the percentage discount bug, vulnerable lodash 4.17.15, missing
+  tests/placeholder test script, README gaps, and GA loading before consent (via or
+  suggesting cookie-consent-audit). Small safe fixes done on the branch.
+context:
+  scaffold_script: place-files.sh

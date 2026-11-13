@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: flags-planted-conversion-leaks
+expected_outcome: |
+  Main flow identified (home → product → cart → register → checkout → payment). Five
+  independent reviewers; merged findings ranked by agreement: surprise shipping + service
+  fee at payment, forced account creation, long form, missing trust info, vague CTAs, slow
+  load. Fake countdown flagged as a dark pattern.
+context:
+  scaffold_script: place-files.sh
