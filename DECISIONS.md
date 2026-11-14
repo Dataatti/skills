@@ -144,3 +144,9 @@ Taken in part:
 - **Product constraints** are an input, and fixes must respect them. But a finding is never dropped because its fix breaks a constraint: it is marked "needs design change". A contrast failure under fixed brand colours is still a WCAG failure, and hiding it would make the report less honest.
 - **Throttling**: the tester proposed throttling only for timing measurements. Instead, the mobile persona throttles the first load of each key page and runs the rest unthrottled, while still noting mis-taps, double submits or missing loading feedback. Slowness during interaction is part of what that persona exists to find, so it isn't dropped entirely.
 - **Evidence column**: as in conversion-audit, a bracketed path stays in the Finding cell, keeping the one-line table.
+- **Follow-up after CI caught a regression (33%).** Three of the new rules broke the eval run:
+  - The smoke pass stopped the local server before the personas started. The server is now started once and left running until every persona finishes; the agent checks it answers before spawning them.
+  - Personas were told to create work folders, which the sandbox didn't allow. Folders are now optional, with DOM excerpts as evidence.
+  - Personas were started as background tasks, so their results arrived after the report. They now run in the foreground.
+  
+  Work folders and the smoke pass are now aids, not gates: neither may trigger a fallback to code-only review.
