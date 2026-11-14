@@ -82,13 +82,13 @@ How tested: <browser tool | code-only>
 |---|---|---|---|---|---|
 | 1 | Date picker opens only on mouse click (booking) [keyboard/datepicker.png] | 4 | keyboard, screen-reader | Make the trigger a <button>; support arrow keys in the grid | WCAG 2.1.1 Keyboard (A) |
 ...
-Task results: keyboard ✗ book a table · low-confidence ✗ change email · mobile ✓ (slow: 6 s to first paint)
+Task results (every persona × task): power ✓ book, ✓ change email · keyboard ✗ book, blocked by book: pay · low-confidence ✓ book, ✗ change email · screen-reader ✓ book, ✓ change email · mobile ✓ book (6 s to first paint), ✓ change email
 Copy: "Proceed" (cart) is vague · EN string "Loading…" on a Czech page (checkout)
 Environment: "Pay" on staging links to the production payment page (not followed)
 Test data created: 2 accounts (ux-test+1@example.com, ux-test+2@example.com), 1 order #S-1042 on staging
 ```
 
-One line per cell; put an evidence path in brackets at the end of the Finding cell. No essay. Mention what passed only in the task results line. Wording problems that cost a persona a task go in the table. Minor copy issues go on the one Copy line. Always end with the Environment and Test data created lines, writing "none" if empty.
+One line per cell; put an evidence path in brackets at the end of the Finding cell. No essay. The Task results line names every persona and gives a status for each of its tasks (✓, ✗, "blocked by <task>", "not attempted"); it is the only place passes are listed. If every persona completed every task, say so in words as well: "All 5 personas completed all tasks." Wording problems that cost a persona a task go in the table. Minor copy issues go on the one Copy line. Always end with the Environment and Test data created lines, writing "none" if empty.
 
 Issues outside this skill's scope (e.g. security, performance, other laws): at most one line at the end naming them and the skill or specialist that covers them. Don't analyse them here.
 
