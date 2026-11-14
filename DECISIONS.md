@@ -123,3 +123,37 @@ Taken (each fixes a real failure mode, a false finding, or unreproducible number
 Taken only partly:
 - **Pre-purchase quizzes**: guidance added under CV-03 instead of a new ID. Quiz length is friction (CV-03), and a price hidden until the end is a CV-05 finding; a separate ID would split the same issue two ways.
 - **Screenshots**: no new report column. A bracketed path in the Issue cell keeps the one-line table.
+## agent-usability-test v1.1 – first tester's feedback (2026-11-13)
+Taken:
+- **Safety section**:
+  - No data entry or submits on production.
+  - Test accounts and cards are used only on test or staging environments, or on a local copy.
+  - Links from staging into production are not followed; they go on the Environment line.
+  - Each persona lists the records it created.
+  - If the agent can't ask the user, it assumes nothing may be submitted, so unattended runs don't block.
+- **Smoke pass before the personas**: the main agent runs every task once, unthrottled. It reports no usability findings from it. Blockers and their workarounds go into the environment notes. In the test, five personas each rediscovered the same 500 error.
+- **After a block**: the persona records the failure and the task counts as failed. It then finishes the later steps as a plain tester and marks those findings "after block", so later steps still get tested without hiding the failure.
+- **Dependent tasks**: "blocked by task N" counts as failed, because that user didn't get there. "Not attempted" is only for named environment blockers, which are left out of the score. A product failure lowers the score; a broken staging server doesn't.
+- **Check step**: every finding needs evidence (a DOM excerpt or a screenshot path). The main agent re-checks all severity 3–4 findings and drops what it can't reproduce. This was the tester's real false finding: a taste profile read as a box size.
+- **Environment line**, kept separate from usability findings, with "check a known-good environment before blaming the product".
+- **Locale in the environment notes and the brief**: jargon and mixed-language strings are judged in the site's own language.
+- **Per-persona work folder and a ~10-minute budget per persona.**
+- **Report**: evidence path in brackets in the Finding cell, a Copy line for minor wording issues, and closing Environment and Test data created lines.
+
+Taken in part:
+- **Product constraints** are an input, and fixes must respect them. But a finding is never dropped because its fix breaks a constraint: it is marked "needs design change". A contrast failure under fixed brand colours is still a WCAG failure, and hiding it would make the report less honest.
+- **Throttling**: the tester proposed throttling only for timing measurements. Instead, the mobile persona throttles the first load of each key page and runs the rest unthrottled, while still noting mis-taps, double submits or missing loading feedback. Slowness during interaction is part of what that persona exists to find, so it isn't dropped entirely.
+- **Evidence column**: as in conversion-audit, a bracketed path stays in the Finding cell, keeping the one-line table.
+- **Follow-up after CI caught a regression (33%).** Three of the new rules broke the eval run:
+  - The smoke pass stopped the local server before the personas started. The server is now started once and left running until every persona finishes; the agent checks it answers before spawning them.
+  - Personas were told to create work folders, which the sandbox didn't allow. Folders are now optional, with DOM excerpts as evidence.
+  - Personas were started as background tasks, so their results arrived after the report. They now run in the foreground.
+  
+  Work folders and the smoke pass are now aids, not gates: neither may trigger a fallback to code-only review.
+- **Sandbox servers.** Some sandboxes, including the eval runner, kill background processes when the command that started them ends, so personas never reached `localhost`. The skill now opens static sites as `file://` URLs, or starts the server inside the same command as each script. An unreachable target falls back to an "unverified" code review instead of an empty report. This was the real cause of the 33% CI result. The old baseline had passed only because personas quietly read code instead of browsing.
+- **Clean fixture, fixed a third time.** With real browsing, personas found genuine defects:
+  - The fixed consent banner covered the focused "Add to cart" button on desktop. The banner is now in page flow at every width.
+  - The expiry field rejected "1/29".
+  - The header promised "free returns" while the returns page said "unopened only". The returns page now has steps and a contact link.
+  - Smaller items: a blank total on an empty checkout, focus not moved after the banner closes, and an "Enter your card number" message for an empty field.
+- **CI sandbox was broken; caught by the new failure diagnosis.** On the GitHub runner (now Ubuntu 26.04), every Bash call inside `claude plugin eval` failed with `apply-seccomp: write /proc/self/setgroups … Permission denied`. So every CI eval so far ran without a shell: no browser, no scripts, code-only reviews. That explains why usability CI runs took 2 minutes against 8–14 locally. The workflow now also clears `kernel.apparmor_restrict_unprivileged_unconfined`, and a "Check the eval sandbox works" step fails the job before any eval if user namespaces or bubblewrap don't work. CI can no longer pass silently on a degraded run. Baselines recorded before this fix should be re-checked after the first CI run with a working sandbox.

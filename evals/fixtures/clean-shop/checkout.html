@@ -32,9 +32,9 @@
   <a href="index.html"><strong>Kettle &amp; Co</strong> – loose-leaf tea</a>
   <p>Secure checkout · Need help? Call +358 2 555 0100</p>
 </header>
-<main id="main">
+<main id="main" tabindex="-1">
 <h1>Checkout</h1>
-<section aria-labelledby="summary-title">
+<section aria-labelledby="summary-title" id="summary-section">
   <h2 id="summary-title">Order summary</h2>
   <ul id="summary-items"></ul>
   <p>Total to pay: <strong id="summary-total"></strong> (VAT included). No other fees. Estimated delivery: <strong data-eta>1–3 working days</strong>. <a href="cart.html" id="edit-cart">Change cart</a></p>
@@ -75,7 +75,7 @@
     <label for="cc-number">Card number</label>
     <input id="cc-number" name="cc-number" autocomplete="cc-number" inputmode="numeric" aria-describedby="cc-number-err">
     <span id="cc-number-err" class="error-msg" hidden>Check your card number – it looks mistyped</span>
-    <label for="cc-exp">Expiry date <span class="hint">MM/YY</span></label>
+    <label for="cc-exp">Expiry date <span class="hint">MM/YY, for example 01/29</span></label>
     <input id="cc-exp" name="cc-exp" autocomplete="cc-exp" inputmode="numeric" aria-describedby="cc-exp-err">
     <span id="cc-exp-err" class="error-msg" hidden>Enter the expiry date as MM/YY</span>
     <label for="cc-csc">Security code <span class="hint">3 or 4 digits, on the back of the card</span></label>

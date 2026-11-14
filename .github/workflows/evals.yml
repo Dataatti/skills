@@ -84,11 +84,21 @@ jobs:
       - name: Install Claude Code, Playwright and the eval sandbox
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq bubblewrap socat
-          # Ubuntu 24.04 restricts unprivileged user namespaces, which bubblewrap needs.
+          # Ubuntu 24.04+ restricts unprivileged user namespaces through AppArmor; the eval sandbox
+          # (bubblewrap + seccomp helper) needs them. Newer releases also restrict unconfined processes.
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_unconfined=0 || true
+          sudo sysctl -w kernel.unprivileged_userns_clone=1 2>/dev/null || true
           npm install -g @anthropic-ai/claude-code playwright
           npx playwright install --with-deps chromium
           claude --version
+
+      - name: Check the eval sandbox works
+        # Without a working sandbox every Bash call inside the evals fails, and skills silently degrade
+        # to code-only reviews. Fail here instead of reporting misleading results.
+        run: |
+          unshare --user --map-root-user sh -c 'echo "user namespaces: ok"'
+          bwrap --ro-bind / / --dev /dev --proc /proc --unshare-user --unshare-pid true && echo "bubblewrap: ok"
 
       - name: Run evals
         run: |

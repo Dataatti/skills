@@ -79,6 +79,34 @@ if a.gate and w:
             lines.append("**PASS**: no regression against baseline.")
     else:
         lines.append("\nNo baseline.json yet – not gating.")
+def diagnose(trace):
+    """Tool-call counts and the start of the last report, so CI failures explain themselves."""
+    if not trace or not os.path.exists(trace):
+        return "  (no trace kept)"
+    tools, last, denied = {}, "", 0
+    for line in open(trace):
+        e = json.loads(line)
+        if e.get("type") not in ("assistant", "user"):
+            continue
+        content = e["message"]["content"]
+        for c in content if isinstance(content, list) else []:
+            if c.get("type") == "tool_use":
+                tools[c["name"]] = tools.get(c["name"], 0) + 1
+            elif c.get("type") == "tool_result" and "denied" in str(c.get("content", ""))[:300]:
+                denied += 1
+            elif c.get("type") == "text" and e["type"] == "assistant":
+                last = c["text"]
+    head = " ".join(last.split())[:700]
+    return f"  tools: {tools} · permission denials: {denied}\n  last message: {head}"
+
+if code and w:
+    lines.append("\n<details><summary>Diagnosis of failed cases</summary>\n")
+    for c in result["cases"]:
+        for r in c["arms"].get("with") or []:
+            if any(not g["passed"] for g in r["graders"] if g.get("scored", True)) or r.get("error"):
+                lines.append(f"- {c['name']} (error: {r.get('error') or 'none'})\n" + diagnose(r.get("tracePath")))
+    lines.append("\n</details>")
+
 if a.write_baseline and w:
     json.dump({"pass_rate": w["pass_rate"], "tolerance": 0.1, "model": (result.get("suite") or {}).get("modelOverride"),
                "date": result.get("startedAt", "")[:10], "time_seconds": w["time_seconds"], "tokens": w["tokens"],

@@ -22,7 +22,7 @@ Represents mobile-first users and anyone on constrained networks or devices (Cor
 | Slow 4G | Fast 3G | 1.44 Mbit/s | 675 kbit/s | 562.5 ms | `downloadThroughput: 180000, uploadThroughput: 84375, latency: 562.5` |
 | Fast 4G | (new) | 8.1 Mbit/s | 1.35 Mbit/s | 165 ms | `downloadThroughput: 1012500, uploadThroughput: 168750, latency: 165` |
 
-  Rename source: "What's new in DevTools, Chrome 127": https://developer.chrome.com/blog/new-in-devtools-127 . Default to **Slow 4G**; use **3G** for a worst-case pass. Optionally add CPU throttling 4x (DevTools device mode: https://developer.chrome.com/docs/devtools/device-mode).
+  Rename source: "What's new in DevTools, Chrome 127": https://developer.chrome.com/blog/new-in-devtools-127 . Default to **Slow 4G**; use **3G** for a worst-case pass. Throttle the first load of each key page (home, product or listing, checkout) and record how long it took. Run the rest of the walkthrough unthrottled, so the persona stays within its time budget. Throttling a whole checkout can take half an hour without telling you more. Note any step where slowness caused a mis-tap, a double submit or no loading feedback. Optionally add CPU throttling 4x (DevTools device mode: https://developer.chrome.com/docs/devtools/device-mode).
 - Record time from navigation/tap to first useful content and to visible feedback. Over 1 s with no feedback, or over 10 s without progress, is a finding (https://www.nngroup.com/articles/response-times-3-important-limits/).
 - **Interruptions**: go offline mid-form (`offline: true`) then back online and submit; reload a half-filled form; check whether input survives and the error is understandable.
 - Watch for layout shift: tap targets moving as images/ads load (CLS, https://web.dev/articles/cls).
