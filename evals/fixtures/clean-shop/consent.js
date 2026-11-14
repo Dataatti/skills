@@ -74,6 +74,7 @@
   function hideBanner() {
     document.getElementById("consent-banner").hidden = true; document.body.classList.remove("banner-open");
     if (returnFocusTo) { returnFocusTo.focus(); returnFocusTo = null; }
+    else { var m = document.getElementById("main"); if (m) m.focus({ preventScroll: true }); }
   }
 
   function boot() {
@@ -109,7 +110,7 @@
       }, "custom");
     });
     var link = document.getElementById("cookie-settings-link");
-    if (link) link.addEventListener("click", function (e) { e.preventDefault(); showBanner(link); });
+    if (link) { link.setAttribute("role", "button"); link.addEventListener("click", function (e) { e.preventDefault(); showBanner(link); }); }
   }
   document.addEventListener("DOMContentLoaded", boot);
 })();

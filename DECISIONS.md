@@ -150,3 +150,9 @@ Taken in part:
   - Personas were started as background tasks, so their results arrived after the report. They now run in the foreground.
   
   Work folders and the smoke pass are now aids, not gates: neither may trigger a fallback to code-only review.
+- **Sandbox servers.** Some sandboxes, including the eval runner, kill background processes when the command that started them ends, so personas never reached `localhost`. The skill now opens static sites as `file://` URLs, or starts the server inside the same command as each script. An unreachable target falls back to an "unverified" code review instead of an empty report. This was the real cause of the 33% CI result. The old baseline had passed only because personas quietly read code instead of browsing.
+- **Clean fixture, fixed a third time.** With real browsing, personas found genuine defects:
+  - The fixed consent banner covered the focused "Add to cart" button on desktop. The banner is now in page flow at every width.
+  - The expiry field rejected "1/29".
+  - The header promised "free returns" while the returns page said "unopened only". The returns page now has steps and a contact link.
+  - Smaller items: a blank total on an empty checkout, focus not moved after the banner closes, and an "Enter your card number" message for an empty field.

@@ -28,7 +28,7 @@ def head(title, checkout=False):
       <li><a href="help.html">Help &amp; contact</a></li>
     </ul>
   </nav>
-  <p>Free returns within 30 days · Shipping €4.90 in Finland, free over €40</p>'''
+  <p>Free returns of unopened tea within 30 days · Shipping €4.90 in Finland, free over €40</p>'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -46,7 +46,7 @@ def head(title, checkout=False):
   <a href="index.html"><strong>Kettle &amp; Co</strong> – loose-leaf tea</a>{nav}
   {'<p>Secure checkout · Need help? Call +358 2 555 0100</p>' if checkout else ''}
 </header>
-<main id="main">
+<main id="main" tabindex="-1">
 '''
 FOOT = '''</main>
 <footer class="trust">
@@ -92,7 +92,7 @@ def product(fname, pid, name, price, img, alt, desc, origin, rating, n, reviews)
   <li>Origin: {origin}. Certified organic (EU organic logo).</li>
   <li>About 50 cups per pouch. Store cool and dry.</li>
   <li>Shipping €4.90, free over €40. Order by 14:00 for same-day dispatch – estimated delivery <strong data-eta>in 1–3 working days</strong>.</li>
-  <li>Free returns within 30 days (<a href="returns.html">returns policy</a>).</li>
+  <li>Free returns of unopened tea within 30 days (<a href="returns.html">returns policy</a>).</li>
 </ul>
 <section id="reviews"><h2>Reviews</h2><p>Showing the 2 most recent reviews, including critical ones. <a href="reviews.html">Read all reviews and the rating breakdown</a></p><ul class="reviews">{revs}</ul></section>
 ''')
@@ -122,7 +122,7 @@ page("cart.html", "Cart", '''<h1 id="cart-heading" tabindex="-1">Your cart</h1>
 </form>
 ''')
 page("checkout.html", "Checkout", '''<h1>Checkout</h1>
-<section aria-labelledby="summary-title">
+<section aria-labelledby="summary-title" id="summary-section">
   <h2 id="summary-title">Order summary</h2>
   <ul id="summary-items"></ul>
   <p>Total to pay: <strong id="summary-total"></strong> (VAT included). No other fees. Estimated delivery: <strong data-eta>1–3 working days</strong>. <a href="cart.html" id="edit-cart">Change cart</a></p>
@@ -163,7 +163,7 @@ page("checkout.html", "Checkout", '''<h1>Checkout</h1>
     <label for="cc-number">Card number</label>
     <input id="cc-number" name="cc-number" autocomplete="cc-number" inputmode="numeric" aria-describedby="cc-number-err">
     <span id="cc-number-err" class="error-msg" hidden>Check your card number – it looks mistyped</span>
-    <label for="cc-exp">Expiry date <span class="hint">MM/YY</span></label>
+    <label for="cc-exp">Expiry date <span class="hint">MM/YY, for example 01/29</span></label>
     <input id="cc-exp" name="cc-exp" autocomplete="cc-exp" inputmode="numeric" aria-describedby="cc-exp-err">
     <span id="cc-exp-err" class="error-msg" hidden>Enter the expiry date as MM/YY</span>
     <label for="cc-csc">Security code <span class="hint">3 or 4 digits, on the back of the card</span></label>
@@ -185,11 +185,13 @@ page("confirm.html", "Order confirmed", '''<h1>Thank you – your order is confi
 <p><a href="index.html">Continue shopping</a></p>
 ''')
 page("help.html", "Help and contact", '''<h1>Help and contact</h1>
+<p><a href="returns.html">How to return an order</a></p>
 <p>Email <a href="mailto:hello@kettle.example">hello@kettle.example</a> or call +358 2 555 0100 (Mon–Fri 9–16).</p>
 <h2>Delete my data</h2>
 <p>You can ask us to delete your personal data at any time from <a href="account.html#delete">your account page</a> or by emailing privacy@kettle.example. We reply within one month.</p>
 ''')
-page("returns.html", "Returns policy", '''<h1>Returns policy</h1><p>Return unopened tea within 30 days for a full refund. Return shipping is free – use the prepaid label in your parcel.</p>
+page("returns.html", "Returns policy", '''<h1>Returns policy</h1><p>Return unopened tea within 30 days for a full refund. Return shipping is free.</p>
+<ol><li>Pack the unopened pouches in the original parcel.</li><li>Stick on the prepaid label from your parcel (lost it? <a href="help.html">contact us</a> and we email a new one).</li><li>Drop it at any Posti point. We refund within 5 working days of receiving it.</li></ol>
 ''')
 page("account.html", "Your account", '''<h1>Your account</h1>
 <h2 id="delete">Delete my account and data</h2>

@@ -73,7 +73,7 @@
     var cart = load("kc_cart");
     if (!Object.keys(cart).length) {
       document.getElementById("checkout").hidden = true;
-      document.getElementById("summary-items").innerHTML = '<li>Your cart is empty. <a href="index.html">Browse teas</a></li>';
+      document.getElementById("summary-section").innerHTML = '<p>Your cart is empty. <a href="index.html">Browse teas</a></p>';
       return;
     }
     var t = summary(cart, document.getElementById("summary-items"), document.getElementById("summary-total"));
@@ -101,13 +101,14 @@
       };
       if (!card.hidden) {
         checks["cc-number"] = function (v) { return luhn(v.replace(/[\s-]/g, "")); };
-        checks["cc-exp"] = function (v) { return /^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(v); };
+        checks["cc-exp"] = function (v) { return /^(0?[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(v); };
         checks["cc-csc"] = function (v) { return /^\d{3,4}$/.test(v); };
       }
       var errors = [];
       Object.keys(checks).forEach(function (id) {
         var el = document.getElementById(id), err = document.getElementById(id + "-err");
         var bad = !checks[id](el.value.trim());
+        if (id === "cc-number") err.textContent = el.value.trim() ? "Check your card number – it looks mistyped" : "Enter your card number";
         err.hidden = !bad; el.setAttribute("aria-invalid", bad ? "true" : "false");
         if (bad) errors.push('<li><a href="#' + id + '">' + err.textContent + "</a></li>");
       });
